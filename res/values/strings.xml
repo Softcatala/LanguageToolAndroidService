@@ -17,8 +17,8 @@
  */
 -->
 <resources>
-    <string name="app_name">SampleSpellCheckerService</string>
-    <string name="spellchecker_name">Sample correction</string>
+    <string name="app_name">Corrector de Softcatala</string>
+    <string name="spellchecker_name">Corrector de Softcatala</string>
     <string name="subtype_generic" translatable="false">%s</string>
     <string name="sample_settings">Sample settings</string>
     <string name="sample_preference">Sample preference</string>
