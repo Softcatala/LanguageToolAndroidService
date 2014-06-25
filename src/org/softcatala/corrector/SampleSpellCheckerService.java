@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2011 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package org.softcatala.corrector;
 
@@ -132,48 +117,7 @@ public class SampleSpellCheckerService extends SpellCheckerService {
                 retval.add(ssi);
             }
             
-            return retval.toArray(new SentenceSuggestionsInfo[0]);
-                
-                
-                /*if (input.equalsIgnoreCase("I wold like to here form you")) {
-                    // Return sentence level suggestion for this fixed input
-                    final int flags0 = SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO;
-                    final int flags1 = SuggestionsInfo.RESULT_ATTR_HAS_RECOMMENDED_SUGGESTIONS
-                            | SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO;
-                    final int flags2 = flags1;
-                    final SuggestionsInfo si0 = new SuggestionsInfo(
-                            flags0, new String[] { "would" });
-                    final SuggestionsInfo si1 = new SuggestionsInfo(
-                            flags1, new String[] { "hear" });
-                    final SuggestionsInfo si2 = new SuggestionsInfo(
-                            flags2, new String[] { "from" });
-                    
-                    sis = new SuggestionsInfo[] {si0, si1, si2};
-                    si0.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                    si1.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                    si2.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                    
-                    
-                    offsets = new int[] { 2, 15, 20 };
-                    lengths = new int[] { 4, 4, 4 };
-                } else {
-                    // Just a mock logic:
-                    // length <= 3 for short words that we assume are in the fake dictionary
-                    // length > 20 for too long words that we assume can't be recognized
-                    // (such as CJK words)
-                    final int flags = length <= 3 ? SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY
-                            : length <= 20 ? SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO : 0;
-                    final SuggestionsInfo si = new SuggestionsInfo(flags,
-                            new String[] {"aaa", "bbb", "Candidate for " + input, mLocale});
-                    sis = new SuggestionsInfo[] { si };
-                    offsets = new int[] { 0 };
-                    lengths = new int[] { ti.getText().length() };
-                    si.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                }
-                final SentenceSuggestionsInfo ssi =
-                        new SentenceSuggestionsInfo(sis, offsets, lengths);
-                retval.add(ssi);*/        
-            //
+            return retval.toArray(new SentenceSuggestionsInfo[0]);            
         }
         
         public static int[] convertIntegers(ArrayList<Integer> integers)
@@ -186,68 +130,5 @@ public class SampleSpellCheckerService extends SpellCheckerService {
             }
             return ret;
         }
-        
-        
-        /*@Override
-        public SentenceSuggestionsInfo[] onGetSentenceSuggestionsMultiple(
-                TextInfo[] textInfos, int suggestionsLimit) {
-            if (!isSentenceSpellCheckApiSupported()) {
-                Log.e(TAG, "Sentence spell check is not supported on this platform, "
-                        + "but accidentially called.");
-                return null;
-            }
-            final ArrayList<SentenceSuggestionsInfo> retval =
-                    new ArrayList<SentenceSuggestionsInfo>();
-            for (int i = 0; i < textInfos.length; ++i) {
-                final TextInfo ti = textInfos[i];
-                if (DBG) {
-                    Log.d(TAG, "onGetSentenceSuggestionsMultiple: " + ti.getText());
-                }
-                final String input = ti.getText();
-                final int length = input.length();
-                final SuggestionsInfo[] sis;
-                final int[] lengths;
-                final int[] offsets;
-                if (input.equalsIgnoreCase("I wold like to here form you")) {
-                    // Return sentence level suggestion for this fixed input
-                    final int flags0 = SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO;
-                    final int flags1 = SuggestionsInfo.RESULT_ATTR_HAS_RECOMMENDED_SUGGESTIONS
-                            | SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO;
-                    final int flags2 = flags1;
-                    final SuggestionsInfo si0 = new SuggestionsInfo(
-                            flags0, new String[] { "would" });
-                    final SuggestionsInfo si1 = new SuggestionsInfo(
-                            flags1, new String[] { "hear" });
-                    final SuggestionsInfo si2 = new SuggestionsInfo(
-                            flags2, new String[] { "from" });
-                    
-                    sis = new SuggestionsInfo[] {si0, si1, si2};
-                    si0.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                    si1.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                    si2.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                    
-                    
-                    offsets = new int[] { 2, 15, 20 };
-                    lengths = new int[] { 4, 4, 4 };
-                } else {
-                    // Just a mock logic:
-                    // length <= 3 for short words that we assume are in the fake dictionary
-                    // length > 20 for too long words that we assume can't be recognized
-                    // (such as CJK words)
-                    final int flags = length <= 3 ? SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY
-                            : length <= 20 ? SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO : 0;
-                    final SuggestionsInfo si = new SuggestionsInfo(flags,
-                            new String[] {"aaa", "bbb", "Candidate for " + input, mLocale});
-                    sis = new SuggestionsInfo[] { si };
-                    offsets = new int[] { 0 };
-                    lengths = new int[] { ti.getText().length() };
-                    si.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
-                }
-                final SentenceSuggestionsInfo ssi =
-                        new SentenceSuggestionsInfo(sis, offsets, lengths);
-                retval.add(ssi);
-            }
-            return retval.toArray(new SentenceSuggestionsInfo[0]);
-        }*/
     }
 }
