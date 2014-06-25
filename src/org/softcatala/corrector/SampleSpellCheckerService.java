@@ -121,7 +121,7 @@ public class SampleSpellCheckerService extends SpellCheckerService {
                 	si.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
                     sis.add(si);
                     offsets.add(suggestions[s].Position);
-                    lengths.add(suggestions[s].Text.length());
+                    lengths.add(suggestions[s].Length);
                 }
                 
                 SuggestionsInfo[] s = sis.toArray(new SuggestionsInfo[0]);

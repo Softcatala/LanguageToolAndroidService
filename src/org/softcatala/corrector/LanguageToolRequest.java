@@ -72,12 +72,17 @@ public class LanguageToolRequest {
 
 			for (int i = 0; i < list.getLength(); i++) {
 				NamedNodeMap nodeMap = list.item(i).getAttributes();
-				Node x = nodeMap.getNamedItem("fromx");
+				Node fromX = nodeMap.getNamedItem("fromx");
 				Node replacements = nodeMap.getNamedItem("replacements");
+				Node toX = nodeMap.getNamedItem("tox");				
+				
 				Suggestion suggestion = new Suggestion();
 				suggestion.Text = replacements.getNodeValue();
-				String value = x.getNodeValue();
+				String value = fromX.getNodeValue();
 				suggestion.Position = Integer.parseInt(value);
+				value = toX.getNodeValue();
+				int to = Integer.parseInt(value);
+				suggestion.Length = to - suggestion.Position;				
 				suggestions.add(suggestion);
 			}
 
@@ -130,6 +135,7 @@ public class LanguageToolRequest {
 	public class Suggestion {
 		public int Position;
 		public String Text;
+		public int Length;
 
 	}
 
