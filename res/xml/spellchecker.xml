@@ -25,6 +25,6 @@
         android:settingsActivity="com.example.android.samplespellcheckerservice.SpellCheckerSettingsActivity">
     <subtype
             android:label="@string/subtype_generic"
-            android:subtypeLocale="en"
+            android:subtypeLocale="ca"
     />
 </spell-checker>
