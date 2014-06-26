@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2014 Jordi Mas i Hernàndez <jmas@softcatala.org>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
 package org.softcatala.corrector;
 
 import java.io.InputStream;
@@ -68,21 +87,21 @@ public class LanguageToolRequest {
 			builder = factory.newDocumentBuilder();
 			is = new InputSource(new StringReader(xml));
 			org.w3c.dom.Document doc = builder.parse(is);
-			NodeList list = doc.getElementsByTagName("error");		
+			NodeList list = doc.getElementsByTagName("error");
 
 			for (int i = 0; i < list.getLength(); i++) {
 				NamedNodeMap nodeMap = list.item(i).getAttributes();
 				Node fromX = nodeMap.getNamedItem("fromx");
 				Node replacements = nodeMap.getNamedItem("replacements");
-				Node toX = nodeMap.getNamedItem("tox");				
-				
+				Node toX = nodeMap.getNamedItem("tox");
+
 				Suggestion suggestion = new Suggestion();
 				suggestion.Text = replacements.getNodeValue().split("#");
 				String value = fromX.getNodeValue();
 				suggestion.Position = Integer.parseInt(value);
 				value = toX.getNodeValue();
 				int to = Integer.parseInt(value);
-				suggestion.Length = to - suggestion.Position;				
+				suggestion.Length = to - suggestion.Position;
 				suggestions.add(suggestion);
 			}
 
