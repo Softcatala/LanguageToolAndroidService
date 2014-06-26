@@ -101,7 +101,7 @@ public class SampleSpellCheckerService extends SpellCheckerService {
                 {
                 	SuggestionsInfo si = new SuggestionsInfo(
                 			SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, 
-                			new String[] {suggestions[s].Text});
+                			suggestions[s].Text);
                 	
                 	si.setCookieAndSequence(ti.getCookie(),  ti.getSequence());
                     sis.add(si);

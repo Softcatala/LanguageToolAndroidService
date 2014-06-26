@@ -77,7 +77,7 @@ public class LanguageToolRequest {
 				Node toX = nodeMap.getNamedItem("tox");				
 				
 				Suggestion suggestion = new Suggestion();
-				suggestion.Text = replacements.getNodeValue();
+				suggestion.Text = replacements.getNodeValue().split("#");
 				String value = fromX.getNodeValue();
 				suggestion.Position = Integer.parseInt(value);
 				value = toX.getNodeValue();
@@ -134,9 +134,8 @@ public class LanguageToolRequest {
 
 	public class Suggestion {
 		public int Position;
-		public String Text;
+		public String[] Text;
 		public int Length;
-
 	}
 
 }
