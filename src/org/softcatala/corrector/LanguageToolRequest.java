@@ -94,6 +94,12 @@ public class LanguageToolRequest {
 				Node fromX = nodeMap.getNamedItem("fromx");
 				Node replacements = nodeMap.getNamedItem("replacements");
 				Node toX = nodeMap.getNamedItem("tox");
+				Node ruleId = nodeMap.getNamedItem("ruleId");
+
+				// Since we process fragments we need to skip the upper case
+				// suggestion
+				if (ruleId.getNodeValue().equals("UPPERCASE_SENTENCE_START") == true)
+					continue;
 
 				Suggestion suggestion = new Suggestion();
 				suggestion.Text = replacements.getNodeValue().split("#");
