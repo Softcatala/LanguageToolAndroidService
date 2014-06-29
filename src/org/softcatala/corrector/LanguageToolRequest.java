@@ -102,8 +102,15 @@ public class LanguageToolRequest {
 					continue;
 
 				Suggestion suggestion = new Suggestion();
-				suggestion.Text = replacements.getNodeValue().split("#");
-				String value = fromX.getNodeValue();
+				String value = replacements.getNodeValue();
+
+				if (value.length() == 0) {
+					suggestion.Text = new String[] { "(sense suggeriment correcció)" };
+				} else {
+					suggestion.Text = value.split("#");
+				}
+
+				value = fromX.getNodeValue();
 				suggestion.Position = Integer.parseInt(value);
 				value = toX.getNodeValue();
 				int to = Integer.parseInt(value);
