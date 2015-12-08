@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/build/intermediates/res/merged/debug/xml/spell_checker_settings.xml",
+        "source": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/xml/spell_checker_settings.xml"
+    },
+    {
+        "merged": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/build/intermediates/res/merged/debug/xml/spellchecker.xml",
+        "source": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/xml/spellchecker.xml"
+    }
+]
