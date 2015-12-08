@@ -11,14 +11,7 @@
                     "endOffset": 111
                 },
                 "from": {
-                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 19,
-                        "startColumn": 4,
-                        "startOffset": 685,
-                        "endColumn": 60,
-                        "endOffset": 741
-                    }
+                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml"
                 }
             },
             {
@@ -26,17 +19,17 @@
                     "startLine": 3,
                     "startColumn": 4,
                     "startOffset": 116,
-                    "endColumn": 63,
-                    "endOffset": 175
+                    "endColumn": 81,
+                    "endOffset": 193
                 },
                 "from": {
                     "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
                     "position": {
                         "startLine": 23,
                         "startColumn": 4,
-                        "startOffset": 944,
-                        "endColumn": 63,
-                        "endOffset": 1003
+                        "startOffset": 941,
+                        "endColumn": 81,
+                        "endOffset": 1018
                     }
                 }
             },
@@ -44,9 +37,9 @@
                 "to": {
                     "startLine": 4,
                     "startColumn": 4,
-                    "startOffset": 180,
-                    "endColumn": 59,
-                    "endOffset": 235
+                    "startOffset": 198,
+                    "endColumn": 56,
+                    "endOffset": 250
                 },
                 "from": {
                     "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
@@ -54,8 +47,8 @@
                         "startLine": 22,
                         "startColumn": 4,
                         "startOffset": 884,
-                        "endColumn": 59,
-                        "endOffset": 939
+                        "endColumn": 56,
+                        "endOffset": 936
                     }
                 }
             },
@@ -63,38 +56,24 @@
                 "to": {
                     "startLine": 5,
                     "startColumn": 4,
-                    "startOffset": 240,
+                    "startOffset": 255,
                     "endColumn": 69,
-                    "endOffset": 305
+                    "endOffset": 320
                 },
                 "from": {
-                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 4,
-                        "startOffset": 746,
-                        "endColumn": 69,
-                        "endOffset": 811
-                    }
+                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml"
                 }
             },
             {
                 "to": {
                     "startLine": 6,
                     "startColumn": 4,
-                    "startOffset": 310,
+                    "startOffset": 325,
                     "endColumn": 67,
-                    "endOffset": 373
+                    "endOffset": 388
                 },
                 "from": {
-                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 4,
-                        "startOffset": 816,
-                        "endColumn": 67,
-                        "endOffset": 879
-                    }
+                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml"
                 }
             }
         ]
