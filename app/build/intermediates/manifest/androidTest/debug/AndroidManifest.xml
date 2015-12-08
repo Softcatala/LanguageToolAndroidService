@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.samplespellcheckerservice.test">
+    package="org.softcatala.corrector.test">
 
     <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="21" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.example.android.samplespellcheckerservice"
+                     android:targetPackage="org.softcatala.corrector"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.example.android.samplespellcheckerservice"/>
+                     android:label="Tests for org.softcatala.corrector"/>
 </manifest>

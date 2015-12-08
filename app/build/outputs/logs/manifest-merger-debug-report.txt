@@ -2,7 +2,7 @@
 manifest
 ADDED from /Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/AndroidManifest.xml:19:1-52:12
 	package
-		ADDED from /Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/AndroidManifest.xml:20:5-65
+		ADDED from /Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/AndroidManifest.xml:20:5-39
 		INJECTED from /Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/AndroidManifest.xml
 	xmlns:android

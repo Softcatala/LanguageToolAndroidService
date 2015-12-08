@@ -17,7 +17,7 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.softcatala.corrector.samplespellcheckerservice" >
+    package="org.softcatala.corrector" >
 
     <uses-sdk android:minSdkVersion="16"/>
     

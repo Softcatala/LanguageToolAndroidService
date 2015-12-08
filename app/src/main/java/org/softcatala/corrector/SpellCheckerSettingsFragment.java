@@ -16,7 +16,7 @@
 
 package org.softcatala.corrector;
 
-import org.softcatala.corrector.samplespellcheckerservice.R;
+import org.softcatala.corrector.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
