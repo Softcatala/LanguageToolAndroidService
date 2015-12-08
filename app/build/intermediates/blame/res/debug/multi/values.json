@@ -30,7 +30,14 @@
                     "endOffset": 175
                 },
                 "from": {
-                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml"
+                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 944,
+                        "endColumn": 63,
+                        "endOffset": 1003
+                    }
                 }
             },
             {
@@ -42,7 +49,14 @@
                     "endOffset": 235
                 },
                 "from": {
-                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml"
+                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 884,
+                        "endColumn": 59,
+                        "endOffset": 939
+                    }
                 }
             },
             {
@@ -73,7 +87,14 @@
                     "endOffset": 373
                 },
                 "from": {
-                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml"
+                    "file": "/Users/jordi/dev/StudioProjects/CorrectorSoftcatalaAndroid/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 816,
+                        "endColumn": 67,
+                        "endOffset": 879
+                    }
                 }
             }
         ]
