@@ -45,7 +45,7 @@ import android.util.Log;
 
 public class LanguageToolRequest {
 
-	private static final String SERVER_URL = "http://www.softcatala.org/languagetool/api/";
+	private static final String SERVER_URL = "https://www.softcatala.org/languagetool/api/";
 	private static final String ENCODING = "UTF-8";
 	private static final String TAG = SampleSpellCheckerService.class
 			.getSimpleName();
