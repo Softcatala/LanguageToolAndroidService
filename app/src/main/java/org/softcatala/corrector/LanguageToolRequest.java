@@ -69,19 +69,30 @@ public class LanguageToolRequest {
 			InputStream is = uc.getInputStream();
 			String result = toString(is);
 			Log.d(TAG, "Request result: " + result);
-			return ReadXml(result);
+			return ReadXml(result, text);
 		} catch (Exception e) {
-			Log.e("error", "Error reading stream from URL.", e);
+			Log.e(TAG,  "Error reading stream from URL.", e);
 		}
 		Suggestion[] suggestions = {};
 		return suggestions;
 	}
 
-	private Suggestion[] ReadXml(String xml) {
+	private Suggestion[] ReadXml(String xml, String text) {
 		ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
 		InputSource is;
+
+		String [] lines = text.split("\n");
+		ArrayList <Integer> linelen = new ArrayList<Integer>();
+
+		// Stores the position in chars for every Y value
+		int currentY = 0;
+		for (int i = 0; i < lines.length; i++) {
+			linelen.add(i, currentY);
+			currentY += lines[i].length() + 1;
+            Log.i(TAG, "Line len: " + currentY);
+		}
 
 		try {
 			builder = factory.newDocumentBuilder();
@@ -92,9 +103,10 @@ public class LanguageToolRequest {
 			for (int i = 0; i < list.getLength(); i++) {
 				NamedNodeMap nodeMap = list.item(i).getAttributes();
 				Node fromX = nodeMap.getNamedItem("fromx");
+				Node fromY = nodeMap.getNamedItem("fromy");
 				Node replacements = nodeMap.getNamedItem("replacements");
-				Node toX = nodeMap.getNamedItem("tox");
 				Node ruleId = nodeMap.getNamedItem("ruleId");
+                Node errorLength = nodeMap.getNamedItem("errorlength");
 
 				// Since we process fragments we need to skip the upper case
 				// suggestion
@@ -110,16 +122,20 @@ public class LanguageToolRequest {
 					suggestion.Text = value.split("#");
 				}
 
+				value = fromY.getNodeValue();
+				Integer valueY = Integer.parseInt(value);
+				valueY = linelen.get(valueY);
+
 				value = fromX.getNodeValue();
-				suggestion.Position = Integer.parseInt(value);
-				value = toX.getNodeValue();
-				int to = Integer.parseInt(value);
-				suggestion.Length = to - suggestion.Position;
+				suggestion.Position = valueY + Integer.parseInt(value);
+				suggestion.Length = Integer.parseInt(errorLength.getNodeValue());
 				suggestions.add(suggestion);
+
+                Log.d(TAG, "Request result: " + suggestion.Position + " Len:" + suggestion.Length);
 			}
 
 		} catch (Exception e) {
-			Log.e("error", "Parsing XML response", e);
+			Log.e(TAG, "ReadXml", e);
 		}
 
 		return suggestions.toArray(new Suggestion[0]);

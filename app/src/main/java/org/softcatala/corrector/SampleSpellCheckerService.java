@@ -104,50 +104,57 @@ public class SampleSpellCheckerService extends SpellCheckerService {
 		@Override
 		public SentenceSuggestionsInfo[] onGetSentenceSuggestionsMultiple(
 				TextInfo[] textInfos, int suggestionsLimit) {
-			if (!isSentenceSpellCheckApiSupported()) {
-				Log.e(TAG,
-						"Sentence spell check is not supported on this platform, "
-								+ "but accidentially called.");
-				return null;
-			}
 
-			final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<SentenceSuggestionsInfo>();
-			for (int i = 0; i < textInfos.length; ++i) {
-				final TextInfo ti = textInfos[i];
-				if (DBG) {
-					Log.d(TAG,
-							"onGetSentenceSuggestionsMultiple: " + ti.getText());
-				}
-				final String input = ti.getText();
 
-				LanguageToolRequest languageToolRequest = new LanguageToolRequest();
-				Suggestion[] suggestions = languageToolRequest
-						.GetSuggestions(input);
-				ArrayList<SuggestionsInfo> sis = new ArrayList<SuggestionsInfo>();
-				ArrayList<Integer> offsets = new ArrayList<Integer>();
-				ArrayList<Integer> lengths = new ArrayList<Integer>();
+            try {
+                if (!isSentenceSpellCheckApiSupported()) {
+                    Log.e(TAG,
+                            "Sentence spell check is not supported on this platform, "
+                                    + "but accidentially called.");
+                    return null;
+                }
 
-				for (int s = 0; s < suggestions.length; s++) {
-					SuggestionsInfo si = new SuggestionsInfo(
-							SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO,
-							suggestions[s].Text);
+                final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<SentenceSuggestionsInfo>();
+                for (int i = 0; i < textInfos.length; ++i) {
+                    final TextInfo ti = textInfos[i];
+                    if (DBG) {
+                        Log.d(TAG,
+                                "onGetSentenceSuggestionsMultiple: " + ti.getText());
+                    }
+                    final String input = ti.getText();
 
-					si.setCookieAndSequence(ti.getCookie(), ti.getSequence());
-					sis.add(si);
-					offsets.add(suggestions[s].Position);
-					lengths.add(suggestions[s].Length);
-				}
+                    LanguageToolRequest languageToolRequest = new LanguageToolRequest();
+                    Suggestion[] suggestions = languageToolRequest
+                            .GetSuggestions(input);
+                    ArrayList<SuggestionsInfo> sis = new ArrayList<SuggestionsInfo>();
+                    ArrayList<Integer> offsets = new ArrayList<Integer>();
+                    ArrayList<Integer> lengths = new ArrayList<Integer>();
 
-				SuggestionsInfo[] s = sis.toArray(new SuggestionsInfo[0]);
-				int[] o = convertIntegers(offsets);
-				int[] l = convertIntegers(lengths);
+                    for (int s = 0; s < suggestions.length; s++) {
+                        SuggestionsInfo si = new SuggestionsInfo(
+                                SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO,
+                                suggestions[s].Text);
 
-				final SentenceSuggestionsInfo ssi = new SentenceSuggestionsInfo(
-						s, o, l);
-				retval.add(ssi);
-			}
+                        si.setCookieAndSequence(ti.getCookie(), ti.getSequence());
+                        sis.add(si);
+                        offsets.add(suggestions[s].Position);
+                        lengths.add(suggestions[s].Length);
+                    }
 
-			return retval.toArray(new SentenceSuggestionsInfo[0]);
+                    SuggestionsInfo[] s = sis.toArray(new SuggestionsInfo[0]);
+                    int[] o = convertIntegers(offsets);
+                    int[] l = convertIntegers(lengths);
+
+                    final SentenceSuggestionsInfo ssi = new SentenceSuggestionsInfo(
+                            s, o, l);
+                    retval.add(ssi);
+                }
+
+                return retval.toArray(new SentenceSuggestionsInfo[0]);
+            } catch (Exception e) {
+                Log.e(TAG, "onGetSentenceSuggestionsMultiple", e);
+                return null;
+            }
 		}
 
 		public static int[] convertIntegers(ArrayList<Integer> integers) {
