@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Corrector de Softcatalà</string>
-    <string name="sample_preference">Variants dialectals (no fet encara)</string>
-    <string name="sample_settings">Preferències</string>
-    <string name="spellchecker_name">Corrector de Softcatalà</string>
-    <string name="subtype_generic" translatable="false">%s</string>
-</resources>
