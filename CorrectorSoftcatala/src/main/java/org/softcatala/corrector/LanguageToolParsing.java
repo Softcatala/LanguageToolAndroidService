@@ -21,12 +21,15 @@ package org.softcatala.corrector;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import android.util.Log;
 
 public class LanguageToolParsing {
@@ -35,20 +38,31 @@ public class LanguageToolParsing {
             .getSimpleName();
 
 
-    public Suggestion[] GetSuggestions(String xml, String text) {
-        ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder;
-        InputSource is;
-
-        // Stores the position in chars for every Y value
-        ArrayList <Integer> linelen = GetLinesLength(text);
-
+    private NodeList readXml(String xml) {
         try {
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder;
+            InputSource is;
+
             builder = factory.newDocumentBuilder();
             is = new InputSource(new StringReader(xml));
             org.w3c.dom.Document doc = builder.parse(is);
-            NodeList list = doc.getElementsByTagName("error");
+            return doc.getElementsByTagName("error");
+
+        } catch (Exception e) {
+            Log.e(TAG, "readXml", e);
+            return null;
+        }
+    }
+
+    public Suggestion[] GetSuggestions(String xml, String text) {
+        ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
+        ArrayList<Integer> linelen = GetLinesLength(text);
+
+        try {
+
+            NodeList list = readXml(xml);
 
             for (int i = 0; i < list.getLength(); i++) {
                 NamedNodeMap nodeMap = list.item(i).getAttributes();
@@ -67,18 +81,15 @@ public class LanguageToolParsing {
                 String value = replacements.getNodeValue();
 
                 if (value.length() == 0) {
-                    suggestion.Text = new String[] { "(sense suggeriment correcció)" };
+                    suggestion.Text = new String[]{"(sense suggeriment correcció)"};
                 } else {
                     suggestion.Text = value.split("#");
                 }
 
-                value = fromY.getNodeValue();
-                Integer valueY = Integer.parseInt(value);
+                int valueY = getIntFromNode(fromY);
                 valueY = linelen.get(valueY);
-
-                value = fromX.getNodeValue();
-                suggestion.Position = valueY + Integer.parseInt(value);
-                suggestion.Length = Integer.parseInt(errorLength.getNodeValue());
+                suggestion.Position = valueY + getIntFromNode(fromX);
+                suggestion.Length = getIntFromNode(errorLength);
                 suggestions.add(suggestion);
 
                 Log.d(TAG, "Request result: " + suggestion.Position + " Len:" + suggestion.Length);
@@ -91,9 +102,14 @@ public class LanguageToolParsing {
         return suggestions.toArray(new Suggestion[0]);
     }
 
-    private ArrayList <Integer> GetLinesLength(String text) {
-        ArrayList <Integer> linelen = new ArrayList<Integer>();
-        String [] lines = text.split("\n");
+    private int getIntFromNode(Node node) {
+        String value = node.getNodeValue();
+        return Integer.parseInt(value);
+    }
+
+    private ArrayList<Integer> GetLinesLength(String text) {
+        ArrayList<Integer> linelen = new ArrayList<Integer>();
+        String[] lines = text.split("\n");
         int currentY = 0;
         for (int i = 0; i < lines.length; i++) {
             linelen.add(i, currentY);
