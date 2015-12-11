@@ -18,7 +18,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/sample_settings">
   <CheckBoxPreference
-     android:title="@string/sample_preference"
-     android:persistent="true"
-     android:defaultValue="true" />
+      android:title="@string/sample_preference"
+      android:key="dialect"
+      android:persistent="true"
+      android:selectable="true"
+      android:defaultValue="false" />
 </PreferenceScreen>
