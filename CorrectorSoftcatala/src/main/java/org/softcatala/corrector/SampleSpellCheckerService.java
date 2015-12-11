@@ -25,11 +25,9 @@ import android.util.Log;
 import android.view.textservice.SentenceSuggestionsInfo;
 import android.view.textservice.SuggestionsInfo;
 import android.view.textservice.TextInfo;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.softcatala.corrector.LanguageToolRequest.Suggestion;
 
 public class SampleSpellCheckerService extends SpellCheckerService {
 	private static final String TAG = SampleSpellCheckerService.class
@@ -43,14 +41,23 @@ public class SampleSpellCheckerService extends SpellCheckerService {
 
 	private static class AndroidSpellCheckerSession extends Session {
 
+		private String mLocale;
+
+		public static int[] convertIntegers(ArrayList<Integer> integers) {
+			int[] ret = new int[integers.size()];
+			Iterator<Integer> iterator = integers.iterator();
+			for (int i = 0; i < ret.length; i++) {
+				ret[i] = iterator.next().intValue();
+			}
+			return ret;
+		}
+
 		private boolean isSentenceSpellCheckApiSupported() {
 			// Note that the sentence level spell check APIs work on Jelly Bean
 			// or later.
 			boolean rslt = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
 			return rslt;
 		}
-
-		private String mLocale;
 
 		@Override
 		public void onCreate() {
@@ -155,15 +162,6 @@ public class SampleSpellCheckerService extends SpellCheckerService {
                 Log.e(TAG, "onGetSentenceSuggestionsMultiple", e);
                 return null;
             }
-		}
-
-		public static int[] convertIntegers(ArrayList<Integer> integers) {
-			int[] ret = new int[integers.size()];
-			Iterator<Integer> iterator = integers.iterator();
-			for (int i = 0; i < ret.length; i++) {
-				ret[i] = iterator.next().intValue();
-			}
-			return ret;
 		}
 	}
 }
