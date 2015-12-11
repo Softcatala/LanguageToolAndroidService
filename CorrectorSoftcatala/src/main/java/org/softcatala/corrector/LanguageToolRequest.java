@@ -44,6 +44,23 @@ public class LanguageToolRequest {
 
 	// private static final boolean DBG = true;
 
+	private static String toString(InputStream inputStream) throws Exception {
+		StringBuilder outputBuilder = new StringBuilder();
+		try {
+			String string;
+			if (inputStream != null) {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(inputStream, ENCODING));
+				while (null != (string = reader.readLine())) {
+					outputBuilder.append(string).append('\n');
+				}
+			}
+		} catch (Exception ex) {
+			Log.e(TAG, "Error reading translation stream.", ex);
+		}
+		return outputBuilder.toString();
+	}
+
 	public Suggestion[] GetSuggestions(String text) {
 		return Request(text);
 	}
@@ -89,23 +106,6 @@ public class LanguageToolRequest {
 		}
 
 		return sb.toString();
-	}
-
-	private static String toString(InputStream inputStream) throws Exception {
-		StringBuilder outputBuilder = new StringBuilder();
-		try {
-			String string;
-			if (inputStream != null) {
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(inputStream, ENCODING));
-				while (null != (string = reader.readLine())) {
-					outputBuilder.append(string).append('\n');
-				}
-			}
-		} catch (Exception ex) {
-			Log.e(TAG, "Error reading translation stream.", ex);
-		}
-		return outputBuilder.toString();
 	}
 
 }
