@@ -46,22 +46,22 @@ public class SpellCheckerSettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.spell_checker_settings);
 
-            //SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-            //Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
+            SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+            Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
 
-            //CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
-            //cb.setChecked(dialect);
+            CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
+            cb.setChecked(dialect);
             Log.d(TAG, "onCreateFragment");
 
-            /*cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
                     Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-                    //spref.edit().putBoolean(PREF_DIALECT, !dialect).commit();
+                    spref.edit().putBoolean(PREF_DIALECT, !dialect).commit();
                     Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
                     return true;
                 }
-            });*/
+            });
         }
     }
 

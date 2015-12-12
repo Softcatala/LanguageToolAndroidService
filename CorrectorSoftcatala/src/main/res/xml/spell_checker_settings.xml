@@ -20,7 +20,7 @@
   <CheckBoxPreference
       android:title="@string/sample_preference"
       android:key="dialect"
-      android:persistent="true"
+      android:persistent="false"
       android:selectable="true"
       android:defaultValue="false" />
 </PreferenceScreen>
