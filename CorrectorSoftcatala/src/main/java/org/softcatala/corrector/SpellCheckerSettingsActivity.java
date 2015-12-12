@@ -39,6 +39,9 @@ public class SpellCheckerSettingsActivity extends PreferenceActivity {
             .getSimpleName();
 
     public static class MyPreferenceFragment extends PreferenceFragment {
+
+        static int HttpConnections = 0;
+
         public SpellCheckerSettingsActivity SettingsActivity;
 
         @Override
@@ -52,6 +55,9 @@ public class SpellCheckerSettingsActivity extends PreferenceActivity {
             CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
             cb.setChecked(dialect);
             Log.d(TAG, "onCreateFragment");
+
+            Preference http = (Preference) findPreference("http");
+            http.setSummary(Integer.toString(HttpConnections));
 
             cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 public boolean onPreferenceChange(Preference preference, Object newValue) {

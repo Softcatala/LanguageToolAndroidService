@@ -23,4 +23,11 @@
       android:persistent="false"
       android:selectable="true"
       android:defaultValue="false" />
+
+    <Preference
+        android:selectable="false"
+        android:enabled="true"
+        android:key="http"
+        android:title="Peticions HTTPS al servidor"
+        android:summary="" />
 </PreferenceScreen>
