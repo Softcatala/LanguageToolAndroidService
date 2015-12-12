@@ -72,7 +72,7 @@ public class LanguageToolRequest {
 		HttpURLConnection uc = null;
 
 		try {
-			SpellCheckerSettingsFragment.HttpConnections++;
+            Configuration.getInstance().incConnections();
 			String url = BuildURL(text);
 			uc = (HttpURLConnection) new URL(url).openConnection();
 

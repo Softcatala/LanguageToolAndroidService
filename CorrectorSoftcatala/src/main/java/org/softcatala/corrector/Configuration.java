@@ -26,6 +26,7 @@ public class Configuration {
 
     private static volatile Configuration instance = null;
     private static String PREF_DIALECT = "corrector.softcatala.dialect";
+    private static int HttpConnections = 0;
     public static SpellCheckerSettingsActivity SettingsActivity;
 
     public static synchronized Configuration getInstance() {
@@ -36,16 +37,26 @@ public class Configuration {
         return instance;
     }
 
-    Boolean getDialect()
+    public Boolean getDialect()
     {
         SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
         Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
         return dialect;
-
     }
-    void setDialect(Boolean dialect)
+
+    public void setDialect(Boolean dialect)
     {
         SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
         spref.edit().putBoolean(PREF_DIALECT, dialect).commit();
+    }
+
+    public int getHttpConnections()
+    {
+        return HttpConnections;
+    }
+
+    public void incConnections()
+    {
+        HttpConnections++;
     }
 }

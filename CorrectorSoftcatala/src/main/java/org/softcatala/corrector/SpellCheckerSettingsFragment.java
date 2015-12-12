@@ -19,14 +19,10 @@
 
 package org.softcatala.corrector;
 
-import org.softcatala.corrector.R;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -35,11 +31,8 @@ import android.util.Log;
 
 public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
-
     private static final String TAG = SampleSpellCheckerService.class
             .getSimpleName();
-
-    static int HttpConnections = 0;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -52,7 +45,7 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
         Log.d(TAG, "onCreate");
 
         Preference http = findPreference("http");
-        http.setSummary(Integer.toString(HttpConnections));
+        http.setSummary(Integer.toString(Configuration.getInstance().getHttpConnections()));
 
         cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
