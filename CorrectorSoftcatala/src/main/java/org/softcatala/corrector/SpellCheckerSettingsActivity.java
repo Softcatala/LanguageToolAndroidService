@@ -17,16 +17,7 @@
 package org.softcatala.corrector;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
-import android.content.SharedPreferences;
-import android.preference.CheckBoxPreference;
-import android.preference.PreferenceFragment;
-import android.preference.Preference;
-import android.util.Log;
-
-import static android.preference.PreferenceManager.*;
 
 
 /**
@@ -34,57 +25,10 @@ import static android.preference.PreferenceManager.*;
  */
 public class SpellCheckerSettingsActivity extends PreferenceActivity {
 
-    static String PREF_DIALECT = "corrector.softcatala.dialect";
-    private static final String TAG = SampleSpellCheckerService.class
-            .getSimpleName();
-
-    public static class MyPreferenceFragment extends PreferenceFragment {
-
-        static int HttpConnections = 0;
-
-        public SpellCheckerSettingsActivity SettingsActivity;
-
-        @Override
-        public void onCreate(final Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.spell_checker_settings);
-
-            SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-            Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-
-            CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
-            cb.setChecked(dialect);
-            Log.d(TAG, "onCreateFragment");
-
-            Preference http = (Preference) findPreference("http");
-            http.setSummary(Integer.toString(HttpConnections));
-
-            cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-                    Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-                    spref.edit().putBoolean(PREF_DIALECT, !dialect).commit();
-                    Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
-                    return true;
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        MyPreferenceFragment frag = new MyPreferenceFragment();
-        frag.SettingsActivity = this;
-        getFragmentManager().beginTransaction().replace(android.R.id.content, frag).commit();
-        Log.d(TAG, "onCreate");
-    }
-
     @Override
     public Intent getIntent() {
         final Intent modIntent = new Intent(super.getIntent());
+        SpellCheckerSettingsFragment.SettingsActivity = this;
         modIntent.putExtra(EXTRA_SHOW_FRAGMENT, SpellCheckerSettingsFragment.class.getName());
         modIntent.putExtra(EXTRA_NO_HEADERS, true);
         return modIntent;
@@ -94,6 +38,4 @@ public class SpellCheckerSettingsActivity extends PreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return SpellCheckerSettingsFragment.class.getName().equals(fragmentName);
     }
-
-    //http://stackoverflow.com/questions/6496450/android-checkbox-preference
 }

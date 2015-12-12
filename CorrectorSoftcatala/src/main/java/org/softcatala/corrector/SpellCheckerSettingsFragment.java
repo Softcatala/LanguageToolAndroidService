@@ -1,40 +1,71 @@
-/**
- * Copyright (C) 2011 The Android Open Source Project
+/*
+ * Copyright (C) 2015 Jordi Mas i Hernàndez <jmas@softcatala.org>
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy
- * of the License at
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 package org.softcatala.corrector;
 
 import org.softcatala.corrector.R;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * Preference screen.
  */
+
 public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
-    /**
-     * Empty constructor for fragment generation.
-     */
-    public SpellCheckerSettingsFragment() {
-    }
+    private static String PREF_DIALECT = "corrector.softcatala.dialect";
+    private static final String TAG = SampleSpellCheckerService.class
+            .getSimpleName();
+
+    static int HttpConnections = 0;
+
+    public static SpellCheckerSettingsActivity SettingsActivity;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.spell_checker_settings);
+
+        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
+
+        CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
+        cb.setChecked(dialect);
+        Log.d(TAG, "onCreateFragment");
+
+        Preference http = findPreference("http");
+        http.setSummary(Integer.toString(HttpConnections));
+
+        cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+                Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
+                spref.edit().putBoolean(PREF_DIALECT, !dialect).commit();
+                Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
+                return true;
+            }
+        });
     }
 }
