@@ -28,7 +28,7 @@ public class SpellCheckerSettingsActivity extends PreferenceActivity {
     @Override
     public Intent getIntent() {
         final Intent modIntent = new Intent(super.getIntent());
-        SpellCheckerSettingsFragment.SettingsActivity = this;
+        Configuration.SettingsActivity = this;
         modIntent.putExtra(EXTRA_SHOW_FRAGMENT, SpellCheckerSettingsFragment.class.getName());
         modIntent.putExtra(EXTRA_NO_HEADERS, true);
         return modIntent;

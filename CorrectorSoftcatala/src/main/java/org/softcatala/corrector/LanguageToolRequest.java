@@ -90,7 +90,8 @@ public class LanguageToolRequest {
 	private String BuildURL(final String text) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(SERVER_URL);
-		sb.append("?language=ca-ES");
+		String lang = Configuration.getInstance().getDialect() ? "ca-ES-valencia" : "ca-ES";
+		sb.append("?language=" + lang);
 		sb.append(AddQueryParameter("text", text));
 		return sb.toString();
 	}

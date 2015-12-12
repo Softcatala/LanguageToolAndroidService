@@ -35,34 +35,29 @@ import android.util.Log;
 
 public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
-    private static String PREF_DIALECT = "corrector.softcatala.dialect";
+
     private static final String TAG = SampleSpellCheckerService.class
             .getSimpleName();
 
     static int HttpConnections = 0;
-
-    public static SpellCheckerSettingsActivity SettingsActivity;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.spell_checker_settings);
 
-        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-        Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-
+        Boolean dialect = Configuration.getInstance().getDialect();
         CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
         cb.setChecked(dialect);
-        Log.d(TAG, "onCreateFragment");
+        Log.d(TAG, "onCreate");
 
         Preference http = findPreference("http");
         http.setSummary(Integer.toString(HttpConnections));
 
         cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-                Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-                spref.edit().putBoolean(PREF_DIALECT, !dialect).commit();
+                Boolean dialect = Configuration.getInstance().getDialect();
+                Configuration.getInstance().setDialect(!dialect);
                 Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
                 return true;
             }
