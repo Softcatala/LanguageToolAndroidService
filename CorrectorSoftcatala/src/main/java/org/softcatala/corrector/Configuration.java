@@ -20,6 +20,7 @@
 package org.softcatala.corrector;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 
 public class Configuration {
@@ -39,6 +40,11 @@ public class Configuration {
 
     public Boolean getDialect()
     {
+        boolean previousTo50 = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
+
+        if (previousTo50)
+            return false;
+
         SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
         Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
         return dialect;
