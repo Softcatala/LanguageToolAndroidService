@@ -22,12 +22,14 @@ package org.softcatala.corrector;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import java.util.Date;
 
 public class Configuration {
 
     private static volatile Configuration instance = null;
     private static String PREF_DIALECT = "corrector.softcatala.dialect";
     private static int HttpConnections = 0;
+    private static Date LastConnection = null;
     public static SpellCheckerSettingsActivity SettingsActivity;
 
     public static synchronized Configuration getInstance() {
@@ -64,5 +66,15 @@ public class Configuration {
     public void incConnections()
     {
         HttpConnections++;
+    }
+
+    public Date getLastConnection()
+    {
+        return LastConnection;
+    }
+
+    public void setLastConnection(Date date)
+    {
+        LastConnection = date;
     }
 }

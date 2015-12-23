@@ -24,6 +24,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import java.util.Date;
 
 /**
  * Preference screen.
@@ -45,7 +46,11 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
         Log.d(TAG, "onCreate");
 
         Preference http = findPreference("http");
-        http.setSummary(Integer.toString(Configuration.getInstance().getHttpConnections()));
+        Date lastConnection = Configuration.getInstance().getLastConnection();
+        String status = String.format("%d (darrera %s)", Configuration.getInstance().getHttpConnections(),
+                lastConnection == null ? "cap" : lastConnection.toString());
+
+        http.setSummary(status);
 
         cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {

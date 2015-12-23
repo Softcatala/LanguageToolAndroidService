@@ -29,7 +29,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
-
+import java.util.Date;
 
 import android.util.Log;
 
@@ -72,12 +72,15 @@ public class LanguageToolRequest {
 		HttpURLConnection uc = null;
 
 		try {
-            Configuration.getInstance().incConnections();
+
 			String url = BuildURL(text);
 			uc = (HttpURLConnection) new URL(url).openConnection();
 
 			InputStream is = uc.getInputStream();
 			String result = toString(is);
+
+			Configuration.getInstance().incConnections();
+			Configuration.getInstance().setLastConnection(new Date());
 			Log.d(TAG, "Request result: " + result);
 			return languageToolParsing.GetSuggestions(result, text);
 		} catch (Exception e) {
