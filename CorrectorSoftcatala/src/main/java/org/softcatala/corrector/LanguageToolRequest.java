@@ -74,6 +74,7 @@ public class LanguageToolRequest {
 		try {
 
 			String url = BuildURL(text);
+            Log.d(TAG, "Request start:" + url);
 			uc = (HttpURLConnection) new URL(url).openConnection();
 
             /* This a specific HTTP header parameter (not the standard User-Agent) to allow

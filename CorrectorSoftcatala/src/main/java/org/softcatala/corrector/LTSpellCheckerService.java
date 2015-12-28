@@ -36,12 +36,17 @@ public class LTSpellCheckerService extends SpellCheckerService {
 
 	@Override
 	public Session createSession() {
+		if (DBG) {
+			Log.d(TAG, "createSession");
+		}
 		return new AndroidSpellCheckerSession();
 	}
 
 	private static class AndroidSpellCheckerSession extends Session {
 
 		private String mLocale;
+		private static final String TAG = AndroidSpellCheckerSession.class
+				.getSimpleName();
 
 		public static int[] convertIntegers(ArrayList<Integer> integers) {
 			int[] ret = new int[integers.size()];
@@ -61,9 +66,26 @@ public class LTSpellCheckerService extends SpellCheckerService {
 
 		@Override
 		public void onCreate() {
+			if (DBG) {
+				Log.d(TAG, "onCreate");
+			}
 			// TODO: To allow debugging a service
 			// android.os.Debug.waitForDebugger();
 			mLocale = getLocale();
+		}
+
+		@Override
+		public void onCancel() {
+			if (DBG) {
+				Log.d(TAG, "onCancel");
+			}
+		}
+
+		@Override
+		public void onClose(){
+			if (DBG) {
+				Log.d(TAG, "onClose");
+			}
 		}
 
 		/**
@@ -159,7 +181,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
 
                 return retval.toArray(new SentenceSuggestionsInfo[0]);
             } catch (Exception e) {
-                Log.e(TAG, "onGetSentenceSuggestionsMultiple", e);
+                Log.e(TAG, "onGetSentenceSuggestionsMultiple" + e);
                 return null;
             }
 		}
