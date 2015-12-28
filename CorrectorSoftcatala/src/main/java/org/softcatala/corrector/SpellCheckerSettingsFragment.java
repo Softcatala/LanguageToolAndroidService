@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
-    private static final String TAG = SampleSpellCheckerService.class
+    private static final String TAG = SpellCheckerSettingsFragment.class
             .getSimpleName();
 
     @Override

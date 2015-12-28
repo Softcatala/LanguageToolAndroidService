@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class SampleSpellCheckerService extends SpellCheckerService {
-	private static final String TAG = SampleSpellCheckerService.class
+public class LTSpellCheckerService extends SpellCheckerService {
+	private static final String TAG = LTSpellCheckerService.class
 			.getSimpleName();
 	private static final boolean DBG = true;
 
