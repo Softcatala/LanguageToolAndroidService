@@ -76,6 +76,10 @@ public class LanguageToolRequest {
 			String url = BuildURL(text);
 			uc = (HttpURLConnection) new URL(url).openConnection();
 
+            /* This a specific HTTP header parameter (not the standard User-Agent) to allow
+            * languagetool.org to distingish the origin of the request */
+            uc.setRequestProperty("useragent","androidspell");
+
 			InputStream is = uc.getInputStream();
 			String result = toString(is);
 
