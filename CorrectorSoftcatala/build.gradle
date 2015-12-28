@@ -16,4 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    signingConfigs {
+        buildTypes {
+            debug {
+                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" +  getDateAsMillis() + "L)"
+            }
+            release {
+                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" +  getDateAsMillis() + "L)"
+            }
+        }
+    }
 }

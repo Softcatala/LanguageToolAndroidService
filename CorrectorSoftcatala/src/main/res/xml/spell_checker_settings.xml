@@ -30,4 +30,11 @@
         android:key="http"
         android:title="Peticions HTTPS al servidor"
         android:summary="" />
+
+    <Preference
+        android:selectable="false"
+        android:enabled="true"
+        android:key="version"
+        android:title="Version"
+        android:summary="" />
 </PreferenceScreen>

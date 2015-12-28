@@ -13,3 +13,8 @@ allprojects {
         jcenter()
     }
 }
+
+def getDateAsMillis() {
+    def Calendar cal = Calendar.getInstance();
+    return cal.getTimeInMillis().toString()
+}

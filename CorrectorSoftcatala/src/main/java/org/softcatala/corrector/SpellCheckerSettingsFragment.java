@@ -26,6 +26,7 @@ import android.preference.PreferenceFragment;
 import android.util.Log;
 import java.util.Date;
 
+
 /**
  * Preference screen.
  */
@@ -38,19 +39,17 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(TAG, "onCreate");
+
         addPreferencesFromResource(R.xml.spell_checker_settings);
 
         Boolean dialect = Configuration.getInstance().getDialect();
         CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
         cb.setChecked(dialect);
-        Log.d(TAG, "onCreate");
 
-        Preference http = findPreference("http");
-        Date lastConnection = Configuration.getInstance().getLastConnection();
-        String status = String.format("%d (darrera %s)", Configuration.getInstance().getHttpConnections(),
-                lastConnection == null ? "cap" : lastConnection.toString());
-
-        http.setSummary(status);
+        setHttpConnections();
+        setVersion();
 
         cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -60,5 +59,31 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+    }
+
+    private void setVersion() {
+        Date buildDate = BuildConfig.buildTime;
+        Preference version = findPreference("version");
+        String v = String.format("%s (built on %s)", getVersion(), buildDate);
+        version.setSummary(v);
+    }
+
+    private String getVersion() {
+        try {
+            String versionName =
+                    getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+            return versionName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void setHttpConnections() {
+        Preference http = findPreference("http");
+        Date lastConnection = Configuration.getInstance().getLastConnection();
+        String status = String.format("%d (darrera %s)", Configuration.getInstance().getHttpConnections(),
+                lastConnection == null ? "cap" : lastConnection.toString());
+
+        http.setSummary(status);
     }
 }
