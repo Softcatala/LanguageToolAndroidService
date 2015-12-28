@@ -35,6 +35,6 @@
         android:selectable="false"
         android:enabled="true"
         android:key="version"
-        android:title="Version"
+        android:title="@string/version"
         android:summary="" />
 </PreferenceScreen>
