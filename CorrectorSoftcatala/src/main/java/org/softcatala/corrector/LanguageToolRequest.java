@@ -37,7 +37,7 @@ public class LanguageToolRequest {
 
 	private static final String SERVER_URL = "https://www.softcatala.org/languagetool/api/";
 	private static final String ENCODING = "UTF-8";
-	private static final String TAG = SampleSpellCheckerService.class
+	private static final String TAG = LanguageToolRequest.class
 			.getSimpleName();
 
 	private final LanguageToolParsing languageToolParsing = new LanguageToolParsing();
@@ -84,7 +84,7 @@ public class LanguageToolRequest {
 			Log.d(TAG, "Request result: " + result);
 			return languageToolParsing.GetSuggestions(result, text);
 		} catch (Exception e) {
-			Log.e(TAG,  "Error reading stream from URL.", e);
+			Log.e(TAG, "Error reading stream from URL.", e);
 		}
 		Suggestion[] suggestions = {};
 		return suggestions;

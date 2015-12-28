@@ -34,7 +34,7 @@ import android.util.Log;
 
 public class LanguageToolParsing {
 
-    private static final String TAG = SampleSpellCheckerService.class
+    private static final String TAG = LanguageToolParsing.class
             .getSimpleName();
 
 
