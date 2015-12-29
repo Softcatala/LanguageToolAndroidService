@@ -25,6 +25,5 @@
     <string name="spellchecker_name">LanguageTool proofreader</string>
     <string name="subtype_generic" translatable="false">%s</string>
     <string name="sample_settings">Preferences</string>
-    <string name="sample_preference">Usa formes valencianes</string>
     <string name="version">Version</string>
 </resources>

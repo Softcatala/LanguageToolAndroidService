@@ -35,14 +35,40 @@ import android.util.Log;
 
 public class LanguageToolRequest {
 
-	private static final String SERVER_URL = "https://www.softcatala.org/languagetool/api/";
+	//private static final String SERVER_URL = "https://www.softcatala.org/languagetool/api/";
+	private static final String SERVER_URL = "https://languagetool.org:8081";
 	private static final String ENCODING = "UTF-8";
-	private static final String TAG = LanguageToolRequest.class
-			.getSimpleName();
+	private static final String TAG = LanguageToolRequest.class.getSimpleName();
 
 	private final LanguageToolParsing languageToolParsing = new LanguageToolParsing();
+	private String m_language;
 
-	// private static final boolean DBG = true;
+    public LanguageToolRequest(String language)
+    {
+        m_language = ConvertLanguage(language);
+    }
+
+    String[][] _languagePairsMap = new String[][]{
+            {"en", "en"},
+            {"de", "de"},
+            {"pl", "pl"},
+            {"fr", "fr"},
+            {"ca", "ca"}
+    };
+
+    private String ConvertLanguage(String language)
+    {
+        String lang = "";
+
+        for (int i = 0; i < _languagePairsMap.length; i++) {
+            if (language.startsWith(_languagePairsMap[i][1])) {
+                lang =  _languagePairsMap[i][0];
+                break;
+            }
+        }
+        Log.d(TAG, String.format("ConvertLanguage from Android %s to LT %s", language, lang));
+        return lang;
+    }
 
 	private static String toString(InputStream inputStream) throws Exception {
 		StringBuilder outputBuilder = new StringBuilder();
@@ -98,8 +124,8 @@ public class LanguageToolRequest {
 	private String BuildURL(final String text) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(SERVER_URL);
-		String lang = Configuration.getInstance().getDialect() ? "ca-ES-valencia" : "ca-ES";
-		sb.append("?language=" + lang);
+		//String lang = Configuration.getInstance().getDialect() ? "ca-ES-valencia" : "ca-ES";
+		sb.append("?language=" + m_language);
 		sb.append(AddQueryParameter("text", text));
 		return sb.toString();
 	}

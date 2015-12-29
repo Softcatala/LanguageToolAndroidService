@@ -27,4 +27,20 @@
             android:label="@string/subtype_generic"
             android:subtypeLocale="ca"
     />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="en"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="de"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="fr"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="pl"
+        />
 </spell-checker>

@@ -30,7 +30,7 @@ public class Configuration {
     private static String PREF_DIALECT = "corrector.softcatala.dialect";
     private static int HttpConnections = 0;
     private static Date LastConnection = null;
-    public static SpellCheckerSettingsActivity SettingsActivity;
+    //public static SpellCheckerSettingsActivity SettingsActivity;
 
     public static synchronized Configuration getInstance() {
         if (instance == null) {
@@ -40,7 +40,7 @@ public class Configuration {
         return instance;
     }
 
-    public Boolean getDialect()
+    /*public Boolean getDialect()
     {
         boolean previousTo50 = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
 
@@ -56,7 +56,7 @@ public class Configuration {
     {
         SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
         spref.edit().putBoolean(PREF_DIALECT, dialect).commit();
-    }
+    }*/
 
     public int getHttpConnections()
     {

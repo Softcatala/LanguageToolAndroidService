@@ -134,7 +134,6 @@ public class LTSpellCheckerService extends SpellCheckerService {
 		public SentenceSuggestionsInfo[] onGetSentenceSuggestionsMultiple(
 				TextInfo[] textInfos, int suggestionsLimit) {
 
-
             try {
                 if (!isSentenceSpellCheckApiSupported()) {
                     Log.e(TAG,
@@ -152,7 +151,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
                     }
                     final String input = ti.getText();
 
-                    LanguageToolRequest languageToolRequest = new LanguageToolRequest();
+                    LanguageToolRequest languageToolRequest = new LanguageToolRequest(mLocale);
                     Suggestion[] suggestions = languageToolRequest
                             .GetSuggestions(input);
                     ArrayList<SuggestionsInfo> sis = new ArrayList<SuggestionsInfo>();

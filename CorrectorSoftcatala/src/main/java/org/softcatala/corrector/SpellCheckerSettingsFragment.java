@@ -44,12 +44,15 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.spell_checker_settings);
 
-        Boolean dialect = Configuration.getInstance().getDialect();
-        CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
-        cb.setChecked(dialect);
-
         setHttpConnections();
         setVersion();
+        //setDialect();
+    }
+
+    private void setDialect() {
+        /*Boolean dialect = Configuration.getInstance().getDialect();
+        CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
+        cb.setChecked(dialect);
 
         cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -58,7 +61,7 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
                 Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
                 return true;
             }
-        });
+        });*/
     }
 
     private void setVersion() {
