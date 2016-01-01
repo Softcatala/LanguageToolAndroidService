@@ -81,7 +81,10 @@ public class LanguageToolParsing {
                 String value = replacements.getNodeValue();
 
                 if (value.length() == 0) {
-                    suggestion.Text = new String[]{"(sense suggeriment correcció)"};
+                    String msgText;
+                    Node msg = nodeMap.getNamedItem("msg");
+                    msgText = String.format("(%s)", msg.getNodeValue());
+                    suggestion.Text = new String[]{msgText};
                 } else {
                     suggestion.Text = value.split("#");
                 }
