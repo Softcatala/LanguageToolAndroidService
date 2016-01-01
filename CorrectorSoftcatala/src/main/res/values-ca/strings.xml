@@ -26,4 +26,7 @@
     <string name="sample_settings">Preferències</string>
     <string name="version">Versió</string>
     <string name="requests">Peticions al servidor de correció</string>
+    <string name="version_text" formatted="false">%s (muntat al %s)</string>
+    <string name="connections" formatted="false">%d (darrera %s)</string>
+    <string name="connection_none">cap</string>
 </resources>

@@ -67,7 +67,7 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
     private void setVersion() {
         Date buildDate = BuildConfig.buildTime;
         Preference version = findPreference("version");
-        String v = String.format("%s (built on %s)", getVersion(), buildDate);
+        String v = String.format(getResources().getString(R.string.version_text), getVersion(), buildDate);
         version.setSummary(v);
     }
 
@@ -84,8 +84,10 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
     private void setHttpConnections() {
         Preference http = findPreference("http");
         Date lastConnection = Configuration.getInstance().getLastConnection();
-        String status = String.format("%d (darrera %s)", Configuration.getInstance().getHttpConnections(),
-                lastConnection == null ? "cap" : lastConnection.toString());
+        String status = String.format(getResources().getString(R.string.connections),
+                Configuration.getInstance().getHttpConnections(),
+                lastConnection == null ? getResources().getString(R.string.connection_none)
+                        : lastConnection.toString());
 
         http.setSummary(status);
     }

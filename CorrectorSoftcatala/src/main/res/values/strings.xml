@@ -27,4 +27,7 @@
     <string name="sample_settings">Preferences</string>
     <string name="version">Version</string>
     <string name="requests">Requests to the proofreader server</string>
+    <string name="version_text" formatted="false">%s (built on %s)</string>
+    <string name="connections" formatted="false">%d (last %s)</string>
+    <string name="connection_none">none</string>
 </resources>
