@@ -48,9 +48,9 @@ public class LanguageToolRequest {
         m_language = ConvertLanguage(language);
     }
 
-    String[][] _languagePairsMap = new String[][]{
-            {"en", "en"},
-            {"de", "de"},
+    String[][] mAndroidToLTLangMap = new String[][]{
+            {"en", "en-US"},
+            {"de", "de-DE"},
             {"pl", "pl"},
             {"fr", "fr"},
             {"ca", "ca"}
@@ -60,9 +60,9 @@ public class LanguageToolRequest {
     {
         String lang = "";
 
-        for (int i = 0; i < _languagePairsMap.length; i++) {
-            if (language.startsWith(_languagePairsMap[i][1])) {
-                lang =  _languagePairsMap[i][0];
+        for (int i = 0; i < mAndroidToLTLangMap.length; i++) {
+            if (language.startsWith(mAndroidToLTLangMap[i][0])) {
+                lang =  mAndroidToLTLangMap[i][1];
                 break;
             }
         }
