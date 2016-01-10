@@ -50,6 +50,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
         private static final String TAG = AndroidSpellCheckerSession.class
                 .getSimpleName();
         private HashSet<String> mReportedErrors;
+        final int MAX_REPORTED_ERRORS_STORED = 100;
 
         public static int[] convertIntegers(ArrayList<Integer> integers) {
             int[] ret = new int[integers.size()];
@@ -61,10 +62,8 @@ public class LTSpellCheckerService extends SpellCheckerService {
         }
 
         private boolean isSentenceSpellCheckApiSupported() {
-            // Note that the sentence level spell check APIs work on Jelly Bean
-            // or later.
-            boolean rslt = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-            return rslt;
+            // Note that the sentence level spell check APIs work on Jelly Bean or later.
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
         }
 
         @Override
@@ -72,8 +71,6 @@ public class LTSpellCheckerService extends SpellCheckerService {
             if (DBG) {
                 Log.d(TAG, "onCreate");
             }
-            // TODO: To allow debugging a service
-            // android.os.Debug.waitForDebugger();
             mLocale = getLocale();
             mReportedErrors = new HashSet<String>();
         }
@@ -93,15 +90,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
         }
 
         /**
-         * This method should have a concrete implementation in all spell
-         * checker services. Please note that the default implementation of
-         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-         * calls up this method. You may want to override
-         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-         * by your own implementation if you'd like to provide an optimized
-         * implementation for
-         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-         * .
+         * This is the word level spell checking previous for Android 4.4.4. Should not be called
          */
         @Override
         public SuggestionsInfo onGetSuggestions(TextInfo textInfo,
@@ -133,7 +122,6 @@ public class LTSpellCheckerService extends SpellCheckerService {
                     return null;
                 }
 
-                final int MAX_REPORTED_ERRORS_STORED = 100;
                 final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<SentenceSuggestionsInfo>();
                 for (int i = 0; i < textInfos.length; ++i) {
                     final TextInfo ti = textInfos[i];
@@ -141,40 +129,14 @@ public class LTSpellCheckerService extends SpellCheckerService {
                         Log.d(TAG, "onGetSentenceSuggestionsMultiple: " + ti.getText());
                     }
 
-                    final String input = ti.getText();
-
-                    LanguageToolRequest languageToolRequest = new LanguageToolRequest(mLocale);
-                    Suggestion[] suggestions = languageToolRequest
-                            .GetSuggestions(input);
                     ArrayList<SuggestionsInfo> sis = new ArrayList<SuggestionsInfo>();
                     ArrayList<Integer> offsets = new ArrayList<Integer>();
                     ArrayList<Integer> lengths = new ArrayList<Integer>();
 
-                    removePreviouslyMarkedErrors(ti, input, sis, offsets, lengths);
+                    removePreviouslyMarkedErrors(ti, sis, offsets, lengths);
+                    getSuggestionsFromLT(ti, sis, offsets, lengths);
 
-                    for (int s = 0; s < suggestions.length; s++) {
-                        SuggestionsInfo si = new SuggestionsInfo(
-                                SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO,
-                                suggestions[s].Text);
-
-                        si.setCookieAndSequence(ti.getCookie(), ti.getSequence());
-                        sis.add(si);
-                        offsets.add(suggestions[s].Position);
-                        lengths.add(suggestions[s].Length);
-                        String incorrectText = input.substring(suggestions[s].Position,
-                                suggestions[s].Position + suggestions[s].Length);
-
-                        if (mReportedErrors.size() < MAX_REPORTED_ERRORS_STORED) {
-                            mReportedErrors.add(incorrectText);
-                            Log.d(TAG, String.format("mReportedErrors size: %d", mReportedErrors.size()));
-                        }
-                    }
-
-                    SuggestionsInfo[] s = sis.toArray(new SuggestionsInfo[0]);
-                    int[] o = convertIntegers(offsets);
-                    int[] l = convertIntegers(lengths);
-
-                    final SentenceSuggestionsInfo ssi = new SentenceSuggestionsInfo(s, o, l);
+                    SentenceSuggestionsInfo ssi = getSentenceSuggestionsInfo(sis, offsets, lengths);
                     retval.add(ssi);
                 }
 
@@ -185,29 +147,67 @@ public class LTSpellCheckerService extends SpellCheckerService {
             }
         }
 
+        private SentenceSuggestionsInfo getSentenceSuggestionsInfo(ArrayList<SuggestionsInfo> sis,
+                                                                   ArrayList<Integer> offsets,
+                                                                   ArrayList<Integer> lengths) {
+            SuggestionsInfo[] s = sis.toArray(new SuggestionsInfo[0]);
+            int[] o = convertIntegers(offsets);
+            int[] l = convertIntegers(lengths);
+            return new SentenceSuggestionsInfo(s, o, l);
+        }
+
+        private void getSuggestionsFromLT(TextInfo ti, ArrayList<SuggestionsInfo> sis,
+                                    ArrayList<Integer> offsets, ArrayList<Integer> lengths) {
+
+            final String input = ti.getText();
+
+            LanguageToolRequest languageToolRequest = new LanguageToolRequest(mLocale);
+            Suggestion[] suggestions = languageToolRequest
+                    .GetSuggestions(input);
+
+            for (int s = 0; s < suggestions.length; s++) {
+                SuggestionsInfo si = new SuggestionsInfo(
+                        SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO,
+                        suggestions[s].Text);
+
+                si.setCookieAndSequence(ti.getCookie(), ti.getSequence());
+                sis.add(si);
+                offsets.add(suggestions[s].Position);
+                lengths.add(suggestions[s].Length);
+                String incorrectText = input.substring(suggestions[s].Position,
+                        suggestions[s].Position + suggestions[s].Length);
+
+                if (mReportedErrors.size() < MAX_REPORTED_ERRORS_STORED) {
+                    mReportedErrors.add(incorrectText);
+                    Log.d(TAG, String.format("mReportedErrors size: %d", mReportedErrors.size()));
+                }
+            }
+        }
+
         /**
          * Let's imagine that you have the text:  Hi ha "cotxes" blaus
          * In the first request we get the text 'Hi ha "cotxes'. We get the error CA_UNPAIRED_BRACKETS
          * because the sentence is not completed and the ending commas are not introduced yet.
-         * <p/>
+         *
          * In the second request we get the text 'Hi ha "cotxes" blaus al carrer', now with both commas
          * there is no longer an error. However, since we sent the error as answer to the first request
          * the error marker will be there since they are not removed.
-         * <p/>
+         *
          * This function asks the spell checker to remove previously marked errors (all of them for the given string)
          * since we spell check the string every time.
-         * <p/>
+         *
          * Every time that we get a request we do not know how this related to the full sentence or
          * if it a sentence previously given. As result, we may ask to remove previously marked errors,
          * but this is fine since we evaluate the sentence every time. We only clean the list of reported
          * errors once per session because we do not when a sentence with a previously marked error
          * will be requested again and if the words that we asked to cleanup previously correspond to that
          * fragment of text.
-         * .
+         *
          */
-        private void removePreviouslyMarkedErrors(TextInfo ti, String input, ArrayList<SuggestionsInfo> sis,
+        private void removePreviouslyMarkedErrors(TextInfo ti, ArrayList<SuggestionsInfo> sis,
                                                   ArrayList<Integer> offsets, ArrayList<Integer> lengths) {
             final int REMOVE_SPAN = 0;
+            final String input = ti.getText();
             for (String txt : mReportedErrors) {
                 int idx = input.indexOf(txt);
                 while (idx != -1) {
