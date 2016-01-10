@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jordi Mas i Hernàndez <jmas@softcatala.org>
+ * Copyright (C) 2014-2016 Jordi Mas i Hernàndez <jmas@softcatala.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -26,6 +26,7 @@ import android.view.textservice.SentenceSuggestionsInfo;
 import android.view.textservice.SuggestionsInfo;
 import android.view.textservice.TextInfo;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 
@@ -47,8 +48,9 @@ public class LTSpellCheckerService extends SpellCheckerService {
 		private String mLocale;
 		private static final String TAG = AndroidSpellCheckerSession.class
 				.getSimpleName();
+        private HashSet<String> mReportedErrors;
 
-		public static int[] convertIntegers(ArrayList<Integer> integers) {
+        public static int[] convertIntegers(ArrayList<Integer> integers) {
 			int[] ret = new int[integers.size()];
 			Iterator<Integer> iterator = integers.iterator();
 			for (int i = 0; i < ret.length; i++) {
@@ -72,6 +74,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
 			// TODO: To allow debugging a service
 			// android.os.Debug.waitForDebugger();
 			mLocale = getLocale();
+            mReportedErrors = new HashSet<String>();
 		}
 
 		@Override
@@ -119,6 +122,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
 					"Candidate for " + input, mLocale });
 		}
 
+
 		/**
 		 * Please consider providing your own implementation of sentence level
 		 * spell checking. Please note that this sample implementation is just a
@@ -136,19 +140,18 @@ public class LTSpellCheckerService extends SpellCheckerService {
 
             try {
                 if (!isSentenceSpellCheckApiSupported()) {
-                    Log.e(TAG,
-                            "Sentence spell check is not supported on this platform, "
-                                    + "but accidentially called.");
+                    Log.e(TAG,  "Sentence spell check is not supported on this platform");
                     return null;
                 }
 
+                final int MAX_REPORTED_ERRORS_STORED = 100;
                 final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<SentenceSuggestionsInfo>();
                 for (int i = 0; i < textInfos.length; ++i) {
                     final TextInfo ti = textInfos[i];
                     if (DBG) {
-                        Log.d(TAG,
-                                "onGetSentenceSuggestionsMultiple: " + ti.getText());
+                        Log.d(TAG, "onGetSentenceSuggestionsMultiple: " + ti.getText());
                     }
+
                     final String input = ti.getText();
 
                     LanguageToolRequest languageToolRequest = new LanguageToolRequest(mLocale);
@@ -157,6 +160,8 @@ public class LTSpellCheckerService extends SpellCheckerService {
                     ArrayList<SuggestionsInfo> sis = new ArrayList<SuggestionsInfo>();
                     ArrayList<Integer> offsets = new ArrayList<Integer>();
                     ArrayList<Integer> lengths = new ArrayList<Integer>();
+
+                    removePreviouslyMarkedErrors(ti, input, sis, offsets, lengths);
 
                     for (int s = 0; s < suggestions.length; s++) {
                         SuggestionsInfo si = new SuggestionsInfo(
@@ -167,6 +172,13 @@ public class LTSpellCheckerService extends SpellCheckerService {
                         sis.add(si);
                         offsets.add(suggestions[s].Position);
                         lengths.add(suggestions[s].Length);
+                        String incorrectText = input.substring(suggestions[s].Position,
+                                suggestions[s].Position + suggestions[s].Length);
+
+                        if (mReportedErrors.size() < MAX_REPORTED_ERRORS_STORED) {
+                            mReportedErrors.add(incorrectText);
+                            Log.d(TAG, String.format("mReportedErrors size: %d", mReportedErrors.size()));
+                        }
                     }
 
                     SuggestionsInfo[] s = sis.toArray(new SuggestionsInfo[0]);
@@ -184,5 +196,46 @@ public class LTSpellCheckerService extends SpellCheckerService {
                 return null;
             }
 		}
-	}
+
+        /**
+         * Let's imagine that you have the text:  Hi ha "cotxes" blaus
+         * In the first request we get the text 'Hi ha "cotxes'. We get the error CA_UNPAIRED_BRACKETS
+         * because the sentence is not completed and the ending commas are not introduced yet.
+         *
+         * In the second request we get the text 'Hi ha "cotxes" blaus al carrer', now with both commas
+         * there is no longer an error. However, since we sent the error as answer to the first request
+         * the error marker will be there since they are not removed.
+         *
+         * This function asks the spell checker to remove previously marked errors (all of them for the given string)
+         * since we spell check the string every time.
+         *
+         * Every time that we get a request we do not know how this related to the full sentence or
+         * if it a sentence previously given. As result, we may ask to remove previously marked errors,
+         * but this is fine since we evaluate the sentence every time. We only clean the list of reported
+         * errors once per session because we do not when a sentence with a previously marked error
+         * will be requested again and if the words that we asked to cleanup previously correspond to that
+         * fragment of text.
+         * .
+         */
+        private void removePreviouslyMarkedErrors(TextInfo ti, String input, ArrayList<SuggestionsInfo> sis,
+                                                  ArrayList<Integer> offsets, ArrayList<Integer> lengths) {
+            final int REMOVE_SPAN = 0;
+            for (String txt : mReportedErrors) {
+                int idx = input.indexOf(txt);
+                while (idx != -1) {
+
+                    SuggestionsInfo siNone = new SuggestionsInfo(REMOVE_SPAN,
+                            new String[]{new String()});
+                    siNone.setCookieAndSequence(ti.getCookie(), ti.getSequence());
+                    sis.add(siNone);
+                    int len = txt.length();
+                    offsets.add(idx);
+                    lengths.add(len);
+
+                    Log.d(TAG, String.format("Asking to remove: '%s' at %d, %d", txt, idx, len));
+                    idx = input.indexOf(txt, idx + 1);
+                }
+            }
+        }
+    }
 }
