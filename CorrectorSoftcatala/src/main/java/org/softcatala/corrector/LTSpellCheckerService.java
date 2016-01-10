@@ -103,25 +103,13 @@ public class LTSpellCheckerService extends SpellCheckerService {
 		 * .
 		 */
 		@Override
-		public SuggestionsInfo onGetSuggestions(TextInfo textInfo,
-				int suggestionsLimit) {
-			if (DBG) {
-				Log.d(TAG, "onGetSuggestions: " + textInfo.getText());
-			}
-			final String input = textInfo.getText();
-			final int length = input.length();
-			// Just a fake logic:
-			// length <= 3 for short words that we assume are in the fake
-			// dictionary
-			// length > 20 for too long words that we assume can't be recognized
-			// (such as CJK words)
-			final int flags = length <= 3 ? SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY
-					: length <= 20 ? SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO
-							: 0;
-			return new SuggestionsInfo(flags, new String[] { "aaa", "bbb",
-					"Candidate for " + input, mLocale });
-		}
-
+        public SuggestionsInfo onGetSuggestions(TextInfo textInfo,
+                                                int suggestionsLimit) {
+            if (DBG) {
+                Log.d(TAG, "onGetSuggestions call not supported");
+            }
+            return null;
+        }
 
 		/**
 		 * Please consider providing your own implementation of sentence level
