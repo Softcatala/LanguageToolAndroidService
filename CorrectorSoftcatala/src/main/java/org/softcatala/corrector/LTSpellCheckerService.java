@@ -25,84 +25,85 @@ import android.util.Log;
 import android.view.textservice.SentenceSuggestionsInfo;
 import android.view.textservice.SuggestionsInfo;
 import android.view.textservice.TextInfo;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
 
 public class LTSpellCheckerService extends SpellCheckerService {
-	private static final String TAG = LTSpellCheckerService.class
-			.getSimpleName();
-	private static final boolean DBG = true;
+    private static final String TAG = LTSpellCheckerService.class
+            .getSimpleName();
+    private static final boolean DBG = true;
 
-	@Override
-	public Session createSession() {
-		if (DBG) {
-			Log.d(TAG, "createSession");
-		}
-		return new AndroidSpellCheckerSession();
-	}
+    @Override
+    public Session createSession() {
+        if (DBG) {
+            Log.d(TAG, "createSession");
+        }
+        return new AndroidSpellCheckerSession();
+    }
 
-	private static class AndroidSpellCheckerSession extends Session {
+    private static class AndroidSpellCheckerSession extends Session {
 
-		private String mLocale;
-		private static final String TAG = AndroidSpellCheckerSession.class
-				.getSimpleName();
+        private String mLocale;
+        private static final String TAG = AndroidSpellCheckerSession.class
+                .getSimpleName();
         private HashSet<String> mReportedErrors;
 
         public static int[] convertIntegers(ArrayList<Integer> integers) {
-			int[] ret = new int[integers.size()];
-			Iterator<Integer> iterator = integers.iterator();
-			for (int i = 0; i < ret.length; i++) {
-				ret[i] = iterator.next().intValue();
-			}
-			return ret;
-		}
+            int[] ret = new int[integers.size()];
+            Iterator<Integer> iterator = integers.iterator();
+            for (int i = 0; i < ret.length; i++) {
+                ret[i] = iterator.next().intValue();
+            }
+            return ret;
+        }
 
-		private boolean isSentenceSpellCheckApiSupported() {
-			// Note that the sentence level spell check APIs work on Jelly Bean
-			// or later.
-			boolean rslt = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-			return rslt;
-		}
+        private boolean isSentenceSpellCheckApiSupported() {
+            // Note that the sentence level spell check APIs work on Jelly Bean
+            // or later.
+            boolean rslt = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+            return rslt;
+        }
 
-		@Override
-		public void onCreate() {
-			if (DBG) {
-				Log.d(TAG, "onCreate");
-			}
-			// TODO: To allow debugging a service
-			// android.os.Debug.waitForDebugger();
-			mLocale = getLocale();
+        @Override
+        public void onCreate() {
+            if (DBG) {
+                Log.d(TAG, "onCreate");
+            }
+            // TODO: To allow debugging a service
+            // android.os.Debug.waitForDebugger();
+            mLocale = getLocale();
             mReportedErrors = new HashSet<String>();
-		}
+        }
 
-		@Override
-		public void onCancel() {
-			if (DBG) {
-				Log.d(TAG, "onCancel");
-			}
-		}
+        @Override
+        public void onCancel() {
+            if (DBG) {
+                Log.d(TAG, "onCancel");
+            }
+        }
 
-		@Override
-		public void onClose(){
-			if (DBG) {
-				Log.d(TAG, "onClose");
-			}
-		}
+        @Override
+        public void onClose() {
+            if (DBG) {
+                Log.d(TAG, "onClose");
+            }
+        }
 
-		/**
-		 * This method should have a concrete implementation in all spell
-		 * checker services. Please note that the default implementation of
-		 * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-		 * calls up this method. You may want to override
-		 * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-		 * by your own implementation if you'd like to provide an optimized
-		 * implementation for
-		 * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-		 * .
-		 */
-		@Override
+        /**
+         * This method should have a concrete implementation in all spell
+         * checker services. Please note that the default implementation of
+         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
+         * calls up this method. You may want to override
+         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
+         * by your own implementation if you'd like to provide an optimized
+         * implementation for
+         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
+         * .
+         */
+        @Override
         public SuggestionsInfo onGetSuggestions(TextInfo textInfo,
                                                 int suggestionsLimit) {
             if (DBG) {
@@ -111,24 +112,24 @@ public class LTSpellCheckerService extends SpellCheckerService {
             return null;
         }
 
-		/**
-		 * Please consider providing your own implementation of sentence level
-		 * spell checking. Please note that this sample implementation is just a
-		 * mock to demonstrate how a sentence level spell checker returns the
-		 * result. If you don't override this method, the framework converts
-		 * queries of
-		 * {@link SpellCheckerService.Session#onGetSentenceSuggestionsMultiple(TextInfo[], int)}
-		 * to queries of
-		 * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
-		 * by the default implementation.
-		 */
-		@Override
-		public SentenceSuggestionsInfo[] onGetSentenceSuggestionsMultiple(
-				TextInfo[] textInfos, int suggestionsLimit) {
+        /**
+         * Please consider providing your own implementation of sentence level
+         * spell checking. Please note that this sample implementation is just a
+         * mock to demonstrate how a sentence level spell checker returns the
+         * result. If you don't override this method, the framework converts
+         * queries of
+         * {@link SpellCheckerService.Session#onGetSentenceSuggestionsMultiple(TextInfo[], int)}
+         * to queries of
+         * {@link SpellCheckerService.Session#onGetSuggestionsMultiple(TextInfo[], int, boolean)}
+         * by the default implementation.
+         */
+        @Override
+        public SentenceSuggestionsInfo[] onGetSentenceSuggestionsMultiple(
+                TextInfo[] textInfos, int suggestionsLimit) {
 
             try {
                 if (!isSentenceSpellCheckApiSupported()) {
-                    Log.e(TAG,  "Sentence spell check is not supported on this platform");
+                    Log.e(TAG, "Sentence spell check is not supported on this platform");
                     return null;
                 }
 
@@ -173,8 +174,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
                     int[] o = convertIntegers(offsets);
                     int[] l = convertIntegers(lengths);
 
-                    final SentenceSuggestionsInfo ssi = new SentenceSuggestionsInfo(
-                            s, o, l);
+                    final SentenceSuggestionsInfo ssi = new SentenceSuggestionsInfo(s, o, l);
                     retval.add(ssi);
                 }
 
@@ -183,20 +183,20 @@ public class LTSpellCheckerService extends SpellCheckerService {
                 Log.e(TAG, "onGetSentenceSuggestionsMultiple" + e);
                 return null;
             }
-		}
+        }
 
         /**
          * Let's imagine that you have the text:  Hi ha "cotxes" blaus
          * In the first request we get the text 'Hi ha "cotxes'. We get the error CA_UNPAIRED_BRACKETS
          * because the sentence is not completed and the ending commas are not introduced yet.
-         *
+         * <p/>
          * In the second request we get the text 'Hi ha "cotxes" blaus al carrer', now with both commas
          * there is no longer an error. However, since we sent the error as answer to the first request
          * the error marker will be there since they are not removed.
-         *
+         * <p/>
          * This function asks the spell checker to remove previously marked errors (all of them for the given string)
          * since we spell check the string every time.
-         *
+         * <p/>
          * Every time that we get a request we do not know how this related to the full sentence or
          * if it a sentence previously given. As result, we may ask to remove previously marked errors,
          * but this is fine since we evaluate the sentence every time. We only clean the list of reported

@@ -22,6 +22,7 @@ package org.softcatala.corrector;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
+
 import java.util.Date;
 
 public class Configuration {
@@ -58,23 +59,19 @@ public class Configuration {
         spref.edit().putBoolean(PREF_DIALECT, dialect).commit();
     }*/
 
-    public int getHttpConnections()
-    {
+    public int getHttpConnections() {
         return HttpConnections;
     }
 
-    public void incConnections()
-    {
+    public void incConnections() {
         HttpConnections++;
     }
 
-    public Date getLastConnection()
-    {
+    public Date getLastConnection() {
         return LastConnection;
     }
 
-    public void setLastConnection(Date date)
-    {
+    public void setLastConnection(Date date) {
         LastConnection = date;
     }
 }
