@@ -186,7 +186,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
 
         /**
          * Let's imagine that you have the text:  Hi ha "cotxes" blaus
-         * In the first request we get the text 'Hi ha "cotxes'. We get the error CA_UNPAIRED_BRACKETS
+         * In the first request we get the text 'Hi ha "cotxes'. We return the error CA_UNPAIRED_BRACKETS
          * because the sentence is not completed and the ending commas are not introduced yet.
          *
          * In the second request we get the text 'Hi ha "cotxes" blaus al carrer', now with both commas
@@ -197,11 +197,11 @@ public class LTSpellCheckerService extends SpellCheckerService {
          * since we spell check the string every time.
          *
          * Every time that we get a request we do not know how this related to the full sentence or
-         * if it a sentence previously given. As result, we may ask to remove previously marked errors,
+         * if is it a sentence previously given. As result, we may ask to remove previously marked errors,
          * but this is fine since we evaluate the sentence every time. We only clean the list of reported
          * errors once per session because we do not when a sentence with a previously marked error
-         * will be requested again and if the words that we asked to cleanup previously correspond to that
-         * fragment of text.
+         * will be requested again and if the words /marks  that we asked to cleanup previously correspond
+         * to that fragment of text.
          *
          */
         private void removePreviouslyMarkedErrors(TextInfo ti, ArrayList<SuggestionsInfo> sis,
