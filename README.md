@@ -1,11 +1,18 @@
 
 --- Introduction
 
-This an experimental spell checking service for Android 4 or higher that uses Language Tool as backend.
+This a spell checking service for Android 4.4 or higher that uses LanguageTool as backend.
 
 See notes: http://www.softcatala.org/wiki/Usuari:Jmas/Experiements_Corrector_Softcatala_Android (Catalan)
 
-To enable debugging, you need to call 'android.os.Debug.waitForDebugger()'
+To enable debugging, you need to call 'android.os.Debug.waitForDebugger()'		
+
+-- Adding a new language
+
+* Translate src/main/res/values/strings.xml
+* Add the language to src/main/res/xml/spellchecker.xml
+* Add language Android to LT mapping src/main/java/org/softcatala/corrector/LanguageToolRequest.java
+* Localize https://play.google.com/store/apps/details?id=org.softcatala.corrector content
 
 -- References
 
