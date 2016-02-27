@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
- * Copyright (C) 2015 Jordi Mas i Hernàndez <jmas@softcatala.org>
+ * Copyright (C) 2015-2016 Jordi Mas i Hernàndez <jmas@softcatala.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -27,16 +27,28 @@
         android:label="@string/spellchecker_name"
         android:settingsActivity="org.softcatala.corrector.SpellCheckerSettingsActivity">
     <subtype
-            android:label="@string/subtype_generic"
-            android:subtypeLocale="ca"
-    />
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="br"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="ca"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="de"
+        />
     <subtype
         android:label="@string/subtype_generic"
         android:subtypeLocale="en"
         />
     <subtype
         android:label="@string/subtype_generic"
-        android:subtypeLocale="de"
+        android:subtypeLocale="eo"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="es"
         />
     <subtype
         android:label="@string/subtype_generic"
@@ -45,5 +57,9 @@
     <subtype
         android:label="@string/subtype_generic"
         android:subtypeLocale="pl"
+        />
+    <subtype
+        android:label="@string/subtype_generic"
+        android:subtypeLocale="uk"
         />
 </spell-checker>

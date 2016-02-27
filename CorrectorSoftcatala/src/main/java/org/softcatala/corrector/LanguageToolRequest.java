@@ -54,7 +54,12 @@ public class LanguageToolRequest {
             {"de", "de-DE"},
             {"pl", "pl"},
             {"fr", "fr"},
-            {"ca", "ca"}
+            {"ca", "ca"},
+            {"uk", "uk"},
+            {"es", "es"},
+            {"br", "br-FR"},
+            {"eo", "eo"}
+
     };
 
     private String ConvertLanguage(String language) {
