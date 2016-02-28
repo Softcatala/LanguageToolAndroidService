@@ -108,10 +108,6 @@ public class LanguageToolRequest {
             Log.d(TAG, "Request start:" + url);
             uc = (HttpURLConnection) new URL(url).openConnection();
 
-            /* This a specific HTTP header parameter (not the standard User-Agent) to allow
-            * languagetool.org to distingish the origin of the request */
-            uc.setRequestProperty("useragent", "androidspell");
-
             InputStream is = uc.getInputStream();
             String result = toString(is);
 
@@ -132,6 +128,8 @@ public class LanguageToolRequest {
         //String lang = Configuration.getInstance().getDialect() ? "ca-ES-valencia" : "ca-ES";
         sb.append("?language=" + m_language);
         sb.append(AddQueryParameter("text", text));
+        /* Parameter to allow languagetool.org to distingish the origin of the request */
+        sb.append(AddQueryParameter("useragent", "androidspell"));
         return sb.toString();
     }
 
