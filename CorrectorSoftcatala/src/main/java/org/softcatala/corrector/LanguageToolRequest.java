@@ -58,8 +58,8 @@ public class LanguageToolRequest {
             {"uk", "uk"},
             {"es", "es"},
             {"br", "br-FR"},
-            {"eo", "eo"}
-
+            {"eo", "eo"},
+            {"ru", "ru-RU"},
     };
 
     private String ConvertLanguage(String language) {
