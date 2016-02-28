@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Correcteur LanguageTool</string>
+  <string name="spellchecker_name">Correcteur LanguageTool</string>
+  <string name="sample_settings">Préférences</string>
+  <string name="version">Version</string>
+  <string name="requests">Requêtes au serveur de correction</string>
+  <string name="version_text" formatted="false">%s (généré sur %s)</string>
+  <string name="connections" formatted="false">%d (dernière %s)</string>
+  <string name="connection_none">aucune</string>
+</resources>

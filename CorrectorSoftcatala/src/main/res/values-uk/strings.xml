@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Коректор LanguageTool</string>
+  <string name="spellchecker_name">Коректор LanguageTool</string>
+  <string name="sample_settings">Налаштування</string>
+  <string name="version">Версія</string>
+  <string name="requests">Запити до сервера коректора</string>
+  <string name="version_text" formatted="false">%s (побудовано на %s)</string>
+  <string name="connections" formatted="false">%d (останній %s)</string>
+  <string name="connection_none">відсутній</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">LanguageTool Textprüfer</string>
+  <string name="spellchecker_name">LanguageTool Textprüfer</string>
+  <string name="sample_settings">Einstellungen</string>
+  <string name="version">Version</string>
+  <string name="requests">Anfragen an den Textprüfungs-Server</string>
+  <string name="version_text" formatted="false">%s (gebaut am %s)</string>
+  <string name="connections" formatted="false">%d (zuletzt %s)</string>
+  <string name="connection_none">keine</string>
+</resources>
