@@ -5,7 +5,7 @@ LanguageTool is a proof­reading program that works as spell checking service.
 
 
 
-LanguageTool is an Open Source proof­reading program that works as Android spell checking service. It is available for Catalan, English, French, German, Polish and English languages. Currently it is in beta version.
+LanguageTool is an Open Source proof­reading program that works as Android spell checking service. It is available for Breton, Catalan, Esperanto, French, German, Spanish, Polish, Ukrainian and Russian languages. Currently it is in beta version.
 
 VERY IMPORTANT: Once it is installed, go to Settings -> Language Input -> Spell Checker and select the "LanguageTool proofreader"
 
