@@ -5,10 +5,10 @@ LanguageTool is a proof­reading program that works as spell checking service.
 
 
 
-LanguageTool is an Open Source proof­reading program that works as Android spell checking service. It is available for Breton, Catalan, Esperanto, French, German, Spanish, Polish, Ukrainian and Russian languages. Currently it is in beta version.
+LanguageTool is an Open Source proof­reading program that works as Android spell checking service. It is available for Breton, Catalan, Esperanto, French, German, Spanish, Polish, Ukrainian and Russian languages, among others. Currently it is in beta version.
 
 VERY IMPORTANT: Once it is installed, go to Settings -> Language Input -> Spell Checker and select the "LanguageTool proofreader"
 
-Since this application is a service, it is automatically integrated with the system and allows the user to spell check from apps like Twitter, Facebook, WhatsUp or Telegram. The application sends what the introduces in regular text boxes (not including passwords) and sends the content over a secure connection to LanguageTool.org that does the spell checking. LanguageTool.org does not keep any text that proofreads.
+Since this application is a service, it is automatically integrated with the system and allows the user to spell check from apps like Twitter, Facebook, WhatsUp or Telegram. The application sends what the user introduces in regular text boxes (not including passwords) and sends the content over a secure connection to LanguageTool.org that does the spell checking. LanguageTool.org does not keep any text that proofreads.
 
 It does NOT work on Samsung devices due to the removal of spell checking API by the manufacturer. It is also known that does not work in some devices (some versions of LG and others).

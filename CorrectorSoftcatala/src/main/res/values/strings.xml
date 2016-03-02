@@ -29,7 +29,7 @@
     <string name="requests">Requests to the proofreader server</string>
     <!-- %s is the version number and %s the date (e.g Sun Feb 28) -->
     <string name="version_text" formatted="false">%s (built on %s)</string>
-    <!-- %d is the number of connextions and %s the date (e.g Sun Feb 28) -->
+    <!-- %d is the number of connections and %s the date (e.g Sun Feb 28) -->
     <string name="connections" formatted="false">%d (last %s)</string>
     <!-- Used on the string (last %s) when there is connection yet -->
     <string name="connection_none">none</string>
