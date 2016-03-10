@@ -112,19 +112,21 @@ public class LanguageToolRequest {
     }
 
     private void FillPostFields(HttpPost httpPost, String text) {
-        BasicNameValuePair usernameBasicNameValuePair = new BasicNameValuePair("language", m_language);
-        BasicNameValuePair passwordBasicNameValuePAir = new BasicNameValuePair("text", text);
+        BasicNameValuePair languageBasicNameValuePair = new BasicNameValuePair("language", m_language);
+        BasicNameValuePair textBasicNameValuePair = new BasicNameValuePair("text", text);
+        /* Parameter to allow languagetool.org to distingish the origin of the request */
+        BasicNameValuePair useragentBasicNameValuePair = new BasicNameValuePair("useragent", "androidspell");
 
         List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
-        nameValuePairList.add(usernameBasicNameValuePair);
-        nameValuePairList.add(passwordBasicNameValuePAir);
+        nameValuePairList.add(languageBasicNameValuePair);
+        nameValuePairList.add(textBasicNameValuePair);
+        nameValuePairList.add(useragentBasicNameValuePair);
 
         try {
 
             UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
             httpPost.setEntity(urlEncodedFormEntity);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e(TAG, "Error reading stream from URL.", e);
         }
     }
@@ -163,10 +165,8 @@ public class LanguageToolRequest {
     private String BuildURL() {
         StringBuilder sb = new StringBuilder();
         sb.append(SERVER_URL);
-        /* Parameter to allow languagetool.org to distingish the origin of the request */
-        sb.append(AddQueryParameter("?", "useragent", "androidspell"));
         /* Parameter to help to track requests from the same IP */
-        sb.append(AddQueryParameter("&", "sessionID", m_sessionId));
+        sb.append(AddQueryParameter("?", "sessionID", m_sessionId));
         return sb.toString();
     }
 
