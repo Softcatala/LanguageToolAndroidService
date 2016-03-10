@@ -39,6 +39,7 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import android.util.Log;
 
@@ -48,6 +49,7 @@ public class LanguageToolRequest {
     private static final String SERVER_URL = "https://languagetool.org:8081";
     private static final String ENCODING = "UTF-8";
     private static final String TAG = LanguageToolRequest.class.getSimpleName();
+    private static final String m_sessionId = GetSessionID();
 
     private final LanguageToolParsing languageToolParsing = new LanguageToolParsing();
     String[][] mAndroidToLTLangMap = new String[][]{
@@ -66,6 +68,13 @@ public class LanguageToolRequest {
 
     public LanguageToolRequest(String language) {
         m_language = ConvertLanguage(language);
+    }
+
+    static private String GetSessionID() {
+        Random rand = new Random();
+        int MAX_NUM = 999999;
+        int id = rand.nextInt(MAX_NUM);
+        return Integer.toString(id);
     }
 
     private static String toString(InputStream inputStream) throws Exception {
@@ -156,6 +165,8 @@ public class LanguageToolRequest {
         sb.append(SERVER_URL);
         /* Parameter to allow languagetool.org to distingish the origin of the request */
         sb.append(AddQueryParameter("?", "useragent", "androidspell"));
+        /* Parameter to help to track requests from the same IP */
+        sb.append(AddQueryParameter("&", "sessionID", m_sessionId));
         return sb.toString();
     }
 
