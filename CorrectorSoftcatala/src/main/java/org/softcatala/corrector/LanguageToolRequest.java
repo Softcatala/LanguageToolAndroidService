@@ -26,12 +26,19 @@ import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.util.Log;
 
@@ -43,12 +50,6 @@ public class LanguageToolRequest {
     private static final String TAG = LanguageToolRequest.class.getSimpleName();
 
     private final LanguageToolParsing languageToolParsing = new LanguageToolParsing();
-    private String m_language;
-
-    public LanguageToolRequest(String language) {
-        m_language = ConvertLanguage(language);
-    }
-
     String[][] mAndroidToLTLangMap = new String[][]{
             {"en", "en-US"},
             {"de", "de-DE"},
@@ -61,18 +62,10 @@ public class LanguageToolRequest {
             {"eo", "eo"},
             {"ru", "ru-RU"},
     };
+    private String m_language;
 
-    private String ConvertLanguage(String language) {
-        String lang = "";
-
-        for (int i = 0; i < mAndroidToLTLangMap.length; i++) {
-            if (language.startsWith(mAndroidToLTLangMap[i][0])) {
-                lang = mAndroidToLTLangMap[i][1];
-                break;
-            }
-        }
-        Log.d(TAG, String.format("ConvertLanguage from Android %s to LT %s", language, lang));
-        return lang;
+    public LanguageToolRequest(String language) {
+        m_language = ConvertLanguage(language);
     }
 
     private static String toString(InputStream inputStream) throws Exception {
@@ -92,8 +85,39 @@ public class LanguageToolRequest {
         return outputBuilder.toString();
     }
 
+    private String ConvertLanguage(String language) {
+        String lang = "";
+
+        for (int i = 0; i < mAndroidToLTLangMap.length; i++) {
+            if (language.startsWith(mAndroidToLTLangMap[i][0])) {
+                lang = mAndroidToLTLangMap[i][1];
+                break;
+            }
+        }
+        Log.d(TAG, String.format("ConvertLanguage from Android %s to LT %s", language, lang));
+        return lang;
+    }
+
     public Suggestion[] GetSuggestions(String text) {
         return Request(text);
+    }
+
+    private void FillPostFields(HttpPost httpPost, String text) {
+        BasicNameValuePair usernameBasicNameValuePair = new BasicNameValuePair("language", m_language);
+        BasicNameValuePair passwordBasicNameValuePAir = new BasicNameValuePair("text", text);
+
+        List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+        nameValuePairList.add(usernameBasicNameValuePair);
+        nameValuePairList.add(passwordBasicNameValuePAir);
+
+        try {
+
+            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
+            httpPost.setEntity(urlEncodedFormEntity);
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Error reading stream from URL.", e);
+        }
     }
 
     public Suggestion[] Request(String text) {
@@ -104,13 +128,18 @@ public class LanguageToolRequest {
 
         try {
 
-            String url = BuildURL(text);
+            String url = BuildURL();
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url);
+            FillPostFields(httpPost, text);
             Log.d(TAG, "Request start:" + url);
-            uc = (HttpURLConnection) new URL(url).openConnection();
 
-            InputStream is = uc.getInputStream();
-            String result = toString(is);
+            HttpResponse httpResponse = httpClient.execute(httpPost);
 
+            InputStream inputStream = httpResponse.getEntity().getContent();
+
+            String result = toString(inputStream);
             Configuration.getInstance().incConnections();
             Configuration.getInstance().setLastConnection(new Date());
             Log.d(TAG, "Request result: " + result);
@@ -122,20 +151,17 @@ public class LanguageToolRequest {
         return suggestions;
     }
 
-    private String BuildURL(final String text) {
+    private String BuildURL() {
         StringBuilder sb = new StringBuilder();
         sb.append(SERVER_URL);
-        //String lang = Configuration.getInstance().getDialect() ? "ca-ES-valencia" : "ca-ES";
-        sb.append("?language=" + m_language);
-        sb.append(AddQueryParameter("text", text));
         /* Parameter to allow languagetool.org to distingish the origin of the request */
-        sb.append(AddQueryParameter("useragent", "androidspell"));
+        sb.append(AddQueryParameter("?", "useragent", "androidspell"));
         return sb.toString();
     }
 
-    String AddQueryParameter(String key, String value) {
+    String AddQueryParameter(String separator, String key, String value) {
         StringBuilder sb = new StringBuilder();
-        sb.append("&");
+        sb.append(separator);
         sb.append(key);
         sb.append("=");
         try {
