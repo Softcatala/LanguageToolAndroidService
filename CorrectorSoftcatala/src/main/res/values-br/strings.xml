@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">Adlenner LanguageTool</string>
+  <string name="spellchecker_name">Adlenner LanguageTool</string>
+  <string name="sample_settings">Perzhioù</string>
+  <string name="version">Stumm</string>
+  <string name="requests">Goulennoù savet da servijer an adlenner </string>
+  <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
+  <string name="version_text" formatted="false">%s  (savet war %s)</string>
+  <!--%d is the number of connections and %s the date (e.g Sun Feb 28)-->
+  <string name="connections" formatted="false">%d  (diwezhañ %s)</string>
+  <!--Used on the string (last %s) when there is connection yet-->
+  <string name="connection_none">mann</string>
+</resources>
