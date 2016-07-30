@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jordi Mas i Hernàndez <jmas@softcatala.org>
+ * Copyright (C) 2014-2016 Jordi Mas i Hernàndez <jmas@softcatala.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -19,16 +19,10 @@
 
 package org.softcatala.corrector;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.util.Log;
 
@@ -38,61 +32,45 @@ public class LanguageToolParsing {
             .getSimpleName();
 
 
-    private NodeList readXml(String xml) {
-        try {
-
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder;
-            InputSource is;
-
-            builder = factory.newDocumentBuilder();
-            is = new InputSource(new StringReader(xml));
-            org.w3c.dom.Document doc = builder.parse(is);
-            return doc.getElementsByTagName("error");
-
-        } catch (Exception e) {
-            Log.e(TAG, "readXml", e);
-            return null;
-        }
-    }
-
-    public Suggestion[] GetSuggestions(String xml, String text) {
+    public Suggestion[] GetSuggestions(String jsonText) {
         ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
-        ArrayList<Integer> linelen = GetLinesLength(text);
 
         try {
 
-            NodeList list = readXml(xml);
+            JSONObject json = new JSONObject(jsonText);
+            JSONArray matches = json.getJSONArray("matches");
 
-            for (int i = 0; i < list.getLength(); i++) {
-                NamedNodeMap nodeMap = list.item(i).getAttributes();
-                Node fromX = nodeMap.getNamedItem("fromx");
-                Node fromY = nodeMap.getNamedItem("fromy");
-                Node replacements = nodeMap.getNamedItem("replacements");
-                Node ruleId = nodeMap.getNamedItem("ruleId");
-                Node errorLength = nodeMap.getNamedItem("errorlength");
+            for (int i = 0; i < matches.length(); i++) {
+
+                JSONObject match = matches.getJSONObject(i);
+
+                JSONArray replacements = match.getJSONArray("replacements");
+                JSONObject rule = match.getJSONObject("rule");
+                String ruleId = rule.getString("id");
 
                 // Since we process fragments we need to skip the upper case
                 // suggestion
-                if (ruleId.getNodeValue().equals("UPPERCASE_SENTENCE_START") == true)
+                if (ruleId.equals("UPPERCASE_SENTENCE_START") == true)
                     continue;
 
                 Suggestion suggestion = new Suggestion();
-                String value = replacements.getNodeValue();
 
-                if (value.length() == 0) {
-                    String msgText;
-                    Node msg = nodeMap.getNamedItem("msg");
-                    msgText = String.format("(%s)", msg.getNodeValue());
+                if (replacements.length() == 0) {
+                    String message = match.getString("message");
+                    String msgText = String.format("(%s)", message);
                     suggestion.Text = new String[]{msgText};
                 } else {
-                    suggestion.Text = value.split("#");
+                    ArrayList<String> list = new ArrayList<String>();
+                    for (int r = 0; r < replacements.length(); r++) {
+                        JSONObject replacement = replacements.getJSONObject(r);
+                        String value = replacement.getString("value");
+                        list.add(value);
+                    }
+                    suggestion.Text = list.toArray(new String[list.size()]);
                 }
 
-                int valueY = getIntFromNode(fromY);
-                valueY = linelen.get(valueY);
-                suggestion.Position = valueY + getIntFromNode(fromX);
-                suggestion.Length = getIntFromNode(errorLength);
+                suggestion.Position = match.getInt("offset");
+                suggestion.Length = match.getInt("length");
                 suggestions.add(suggestion);
 
                 Log.d(TAG, "Request result: " + suggestion.Position + " Len:" + suggestion.Length);
@@ -103,22 +81,5 @@ public class LanguageToolParsing {
         }
 
         return suggestions.toArray(new Suggestion[0]);
-    }
-
-    private int getIntFromNode(Node node) {
-        String value = node.getNodeValue();
-        return Integer.parseInt(value);
-    }
-
-    private ArrayList<Integer> GetLinesLength(String text) {
-        ArrayList<Integer> linelen = new ArrayList<Integer>();
-        String[] lines = text.split("\n");
-        int currentY = 0;
-        for (int i = 0; i < lines.length; i++) {
-            linelen.add(i, currentY);
-            currentY += lines[i].length() + 1;
-            Log.i(TAG, "Line len: " + currentY);
-        }
-        return linelen;
     }
 }
