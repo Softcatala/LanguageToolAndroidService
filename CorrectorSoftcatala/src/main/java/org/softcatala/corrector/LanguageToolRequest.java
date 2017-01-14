@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jordi Mas i Hernàndez <jmas@softcatala.org>
+ * Copyright (C) 2014-2017 Jordi Mas i Hernàndez <jmas@softcatala.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -19,29 +19,18 @@
 
 package org.softcatala.corrector;
 
-import java.io.InputStream;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.BufferedReader;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import android.util.Log;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class LanguageToolRequest {
 
@@ -77,22 +66,6 @@ public class LanguageToolRequest {
         return Integer.toString(id);
     }
 
-    private static String toString(InputStream inputStream) throws Exception {
-        StringBuilder outputBuilder = new StringBuilder();
-        try {
-            String string;
-            if (inputStream != null) {
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(inputStream, ENCODING));
-                while (null != (string = reader.readLine())) {
-                    outputBuilder.append(string).append('\n');
-                }
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "Error reading translation stream.", ex);
-        }
-        return outputBuilder.toString();
-    }
 
     private String ConvertLanguage(String language) {
         String lang = "";
@@ -111,46 +84,66 @@ public class LanguageToolRequest {
         return Request(text);
     }
 
-    private void FillPostFields(HttpPost httpPost, String text) {
-        BasicNameValuePair languageBasicNameValuePair = new BasicNameValuePair("language", m_language);
-        BasicNameValuePair textBasicNameValuePair = new BasicNameValuePair("text", text);
+    private String GetFillPostFields(String text) {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(AddQueryParameter("", "language", "ca"));
+        sb.append(AddQueryParameter("&", "text", text));
         /* Parameter to allow languagetool.org to distingish the origin of the request */
-        BasicNameValuePair useragentBasicNameValuePair = new BasicNameValuePair("useragent", "androidspell");
-
-        List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
-        nameValuePairList.add(languageBasicNameValuePair);
-        nameValuePairList.add(textBasicNameValuePair);
-        nameValuePairList.add(useragentBasicNameValuePair);
-
-        try {
-
-            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(nameValuePairList, "UTF-8");
-            httpPost.setEntity(urlEncodedFormEntity);
-        } catch (Exception e) {
-            Log.e(TAG, "Error reading stream from URL.", e);
-        }
+        sb.append(AddQueryParameter("&", "useragent", "androidspell"));
+        return sb.toString();
     }
 
-    public Suggestion[] Request(String text) {
-        HttpClient client = new DefaultHttpClient();
-        HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); // Timeout
-        // Limit
-        HttpURLConnection uc = null;
+    // HTTP POST request
+    private String sendPost(String text) {
 
         try {
 
             String url = BuildURL();
 
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
-            FillPostFields(httpPost, text);
-            Log.d(TAG, "Request start:" + url);
+            URL obj = new URL(url);
+            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
+            String urlParameters = GetFillPostFields(text);
+            Log.d("softcatala", "Parameters : " + urlParameters);
 
-            InputStream inputStream = httpResponse.getEntity().getContent();
+            // Send post request
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
 
-            String result = toString(inputStream);
+            int responseCode = con.getResponseCode();
+
+            Log.d("softcatala", "Response Code : " + responseCode);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            Log.d("softcatala", "Response : " + response);
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            return response.toString();
+        } catch (Exception e) {
+            Log.e("softcatala", "Exception ", e);
+        }
+
+        return "";
+    }
+
+
+    public Suggestion[] Request(String text) {
+        try {
+
+            String result = sendPost(text);
+
             Configuration.getInstance().incConnections();
             Configuration.getInstance().setLastConnection(new Date());
             Log.d(TAG, "Request result: " + result);
