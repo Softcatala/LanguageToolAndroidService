@@ -88,7 +88,7 @@ public class LanguageToolRequest {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(AddQueryParameter("", "language", "ca"));
+        sb.append(AddQueryParameter("", "language", m_language));
         sb.append(AddQueryParameter("&", "text", text));
         /* Parameter to allow languagetool.org to distingish the origin of the request */
         sb.append(AddQueryParameter("&", "useragent", "androidspell"));
