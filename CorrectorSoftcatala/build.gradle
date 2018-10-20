@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "org.softcatala.corrector"
-        minSdkVersion 26
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 10
         versionName "1.0.9"
