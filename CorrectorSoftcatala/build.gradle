@@ -21,11 +21,16 @@ android {
     signingConfigs {
         buildTypes {
             debug {
-                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" +  getDateAsMillis() + "L)"
+                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + getDateAsMillis() + "L)"
             }
             release {
-                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" +  getDateAsMillis() + "L)"
+                buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + getDateAsMillis() + "L)"
             }
         }
     }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.+'
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }

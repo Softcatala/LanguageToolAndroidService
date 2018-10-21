@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /*
  * Copyright (C) 2015 Jordi Mas i Hernàndez <jmas@softcatala.org>
  *
@@ -33,4 +32,13 @@
     <string name="connections" formatted="false">%d (last %s)</string>
     <!-- Used on the string (last %s) when there is connection yet -->
     <string name="connection_none">none</string>
+    <string name="install_steps">Welcome to LanguageTool proofreader!\n\nIn order to configure this application, follow these steps:\n
+        1. Settings -> Language Input -> Spell Checker\n
+        2. Select the "LanguageTool proofreader\n
+    </string>
+    <string name="app_limitations">Known limitations:\n
+        1. Some manofacturers like Samsung remove the preferences that make possible select 3rd party spell checkers like this.\n
+        2. Some keyboards (e.g Yandex keyboard) ignore the configuration of 3rd party spell checkers.\n
+        \nOverall due to Android ecosystem fragmentation in API and UI configuration layers a significant combiation of devices do not work with this application.
+    </string>
 </resources>
