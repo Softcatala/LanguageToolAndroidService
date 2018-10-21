@@ -33,8 +33,8 @@
     <!-- Used on the string (last %s) when there is connection yet -->
     <string name="connection_none">none</string>
     <string name="install_steps">Welcome to LanguageTool proofreader!\n\nIn order to configure this application, follow these steps:\n
-        1. Go to Settings -> Language Input -> Spell Checker\n
-        2. Select the "LanguageTool proofreader\n
+        1. Go to Settings -> Languages &amp; input -> Spell checker\n
+        2. Select the "LanguageTool proofreader" as "Default spell checker"\n
     </string>
     <string name="app_limitations">Known limitations:\n
         1. Some manufacturers like Samsung remove the preferences that make possible select 3rd party spell checkers like this.\n
