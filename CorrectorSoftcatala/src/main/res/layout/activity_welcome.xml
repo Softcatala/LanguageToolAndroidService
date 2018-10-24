@@ -7,25 +7,69 @@
     android:padding="30dp"
     tools:context=".WelcomeActivity">
 
-    <TextView
-        android:id="@+id/textViewSteps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical">
 
-    <TextView
-        android:id="@+id/textViewLimitations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSteps"
-    	android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonClose"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLimitations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-	app:layout_constraintLeft_toLeftOf="parent"
-	app:layout_constraintRight_toRightOf="parent"
-	android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/textViewWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewInstallTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/installation_title"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWelcome"/>
+
+            <TextView
+                android:id="@+id/textViewSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Install"
+                app:layout_constraintTop_toBottomOf="@+id/textViewInstallTitle"/>
+
+            <TextView
+                android:id="@+id/textViewLimitationsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/limitations_title"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSteps"/>
+
+            <TextView
+                android:id="@+id/textViewLimitations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLimitationsTitle"/>
+
+            <Button
+                android:id="@+id/buttonClose"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLimitations"/>
+        </LinearLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
