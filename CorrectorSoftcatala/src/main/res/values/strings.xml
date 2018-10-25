@@ -36,8 +36,8 @@
     <string name="installation_title">Installation</string>
     <string name="limitations_title">Limitations</string>
     <string name="install_steps">To configure this application, follow these steps:\n
-        1. Go to Settings -> Languages &amp; input -> Spell checker\n
-        2. Select the "LanguageTool proofreader" as "Default spell checker"\n
+        1. Go to Settings -> Languages &amp; input -> Spell checker.\n
+        2. Select the "LanguageTool proofreader" as "Default spell checker."\n
     </string>
     <string name="app_limitations">Known limitations:\n
         1. Some manufacturers like Samsung remove the preferences that make possible select 3rd party spell checkers like this.\n
