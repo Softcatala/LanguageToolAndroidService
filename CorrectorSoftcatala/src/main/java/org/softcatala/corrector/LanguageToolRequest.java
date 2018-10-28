@@ -52,6 +52,8 @@ public class LanguageToolRequest {
             {"br", "br-FR"},
             {"eo", "eo"},
             {"ru", "ru-RU"},
+            {"nl", "nl"},
+            {"it", "it"}
     };
     private String m_language;
 
