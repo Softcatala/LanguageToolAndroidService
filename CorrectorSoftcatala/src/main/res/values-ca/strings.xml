@@ -1,32 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-/*
- * Copyright (C) 2015 Jordi Mas i Hernàndez <jmas@softcatala.org>
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
- */
-
--->
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="app_name">Corrector LanguageTool</string>
-    <string name="spellchecker_name">Corrector LanguageTool</string>
-    <string name="sample_settings">Preferències</string>
-    <string name="version">Versió</string>
-    <string name="requests">Peticions al servidor de correció</string>
-    <string name="version_text" formatted="false">%s (muntat al %s)</string>
-    <string name="connections" formatted="false">%d (darrera %s)</string>
-    <string name="connection_none">cap</string>
+  <string name="app_name">Revisió de text LanguageTool</string>
+  <string name="spellchecker_name">Revisió de text LanguageTool</string>
+  <string name="sample_settings">Preferències</string>
+  <string name="version">Versió</string>
+  <string name="requests">Sol·licituds al servidor</string>
+  <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
+  <string name="version_text" formatted="false">%s (compilat el %s)</string>
+  <!--%d is the number of connections and %s the date (e.g Sun Feb 28)-->
+  <string name="connections" formatted="false">%d (últim %s)</string>
+  <!--Used on the string (last %s) when there is connection yet-->
+  <string name="connection_none">cap</string>
+  <string name="install_steps">Per a configurar aquesta aplicació, seguiu els següents passos::\n
+      1. Aneu a Paràmetres -&gt; Idiomes i introducció de text -&gt; Corrector ortogràfic.\n
+      2. Escolliu \"Revisió de text LanguageTool\" com a  \"Corrector ortogràfic predeterminat.\"\n</string>
+  <string name="app_limitations">Limitacions conegudes:\n
+       1. Alguns fabricants com Samsung suprimeixen les preferències que permeten seleccionar correctors ortogràfics de tercers com aquest.\n
+       2. Alguns teclats (p .ex Yandex keyboard) ignoren la configuració de correctors ortogràfics de tercers.\n
+\nDegut a la fragmentació en les capes de UI i API a Android, bastants combinacions de dispositius no funcionen amb aquesta aplicació.</string>
+  <string name="button_close">Tanca</string>
 </resources>

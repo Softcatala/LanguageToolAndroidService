@@ -5,7 +5,11 @@
   <string name="sample_settings">Einstellungen</string>
   <string name="version">Version</string>
   <string name="requests">Anfragen an den Textprüfungs-Server</string>
+  <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (gebaut am %s)</string>
+  <!--%d is the number of connections and %s the date (e.g Sun Feb 28)-->
   <string name="connections" formatted="false">%d (zuletzt %s)</string>
+  <!--Used on the string (last %s) when there is connection yet-->
   <string name="connection_none">keine</string>
+  <string name="button_close">Schließen</string>
 </resources>

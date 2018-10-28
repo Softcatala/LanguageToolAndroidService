@@ -5,7 +5,11 @@
   <string name="sample_settings">Agordoj</string>
   <string name="version">Versio</string>
   <string name="requests">Petoj al la servilo de kontrolado</string>
+  <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (kunmetita ĉe %s)</string>
+  <!--%d is the number of connections and %s the date (e.g Sun Feb 28)-->
   <string name="connections" formatted="false">%d (lasta %s)</string>
+  <!--Used on the string (last %s) when there is connection yet-->
   <string name="connection_none">neniu</string>
+  <string name="button_close">Fermi</string>
 </resources>

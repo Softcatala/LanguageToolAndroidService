@@ -4,8 +4,12 @@
   <string name="spellchecker_name">Корректор LanguageTool </string>
   <string name="sample_settings">Настройки</string>
   <string name="version">Версия</string>
-  <string name="requests">Запрос к серверу проверки</string>
-  <string name="version_text" formatted="false">%s (построен на %s)</string>
-  <string name="connections" formatted="false">%d (последний %s)</string>
+  <string name="requests">Объём запросов к серверу проверки</string>
+  <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
+  <string name="version_text" formatted="false">%s (сборка от %s)</string>
+  <!--%d is the number of connections and %s the date (e.g Sun Feb 28)-->
+  <string name="connections" formatted="false">%d (последний запрос %s)</string>
+  <!--Used on the string (last %s) when there is connection yet-->
   <string name="connection_none">отсутствует</string>
+  <string name="button_close">Закрыть</string>
 </resources>
