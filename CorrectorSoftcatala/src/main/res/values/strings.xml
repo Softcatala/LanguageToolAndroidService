@@ -25,6 +25,7 @@
     <string name="subtype_generic" translatable="false">%s</string>
     <string name="sample_settings">Preferences</string>
     <string name="version">Version</string>
+    <string name="server">Server</string>
     <string name="requests">Requests to the proofreader server</string>
     <!-- %s is the version number and %s the date (e.g Sun Feb 28) -->
     <string name="version_text" formatted="false">%s (built on %s)</string>

@@ -4,6 +4,7 @@
   <string name="spellchecker_name">LanguageTool Textprüfer</string>
   <string name="sample_settings">Einstellungen</string>
   <string name="version">Version</string>
+  <string name="server">Server</string>
   <string name="requests">Anfragen an den Textprüfungs-Server</string>
   <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (gebaut am %s)</string>

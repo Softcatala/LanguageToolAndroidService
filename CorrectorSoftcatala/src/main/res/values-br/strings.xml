@@ -4,6 +4,7 @@
   <string name="spellchecker_name">Adlenner LanguageTool</string>
   <string name="sample_settings">Perzhioù</string>
   <string name="version">Stumm</string>
+  <string name="server">Servijer</string>
   <string name="requests">Goulennoù savet da servijer an adlenner </string>
   <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s  (savet war %s)</string>

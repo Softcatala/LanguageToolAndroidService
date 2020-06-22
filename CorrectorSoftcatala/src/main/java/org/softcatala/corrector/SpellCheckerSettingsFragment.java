@@ -22,6 +22,7 @@ package org.softcatala.corrector;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
@@ -47,6 +48,7 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
         setHttpConnections();
         setVersion();
+        setServer();
         //setDialect();
     }
 
@@ -63,6 +65,21 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });*/
+    }
+
+    private void setServer() {
+        EditTextPreference server = ((EditTextPreference) findPreference("server"));
+        server.setSummary(Configuration.getInstance().getServer());
+
+        server.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String newServer = newValue.toString();
+                newServer = Configuration.getInstance().setServer(newServer);
+                EditTextPreference server = ((EditTextPreference) preference);
+                server.setSummary(newServer);
+                return true;
+            }
+        });
     }
 
     private void setVersion() {

@@ -22,6 +22,7 @@ package org.softcatala.corrector;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
@@ -30,12 +31,8 @@ import java.util.Random;
 
 import android.util.Log;
 
-import javax.net.ssl.HttpsURLConnection;
-
 public class LanguageToolRequest {
 
-    //private static final String SERVER_URL = "https://www.softcatala.org/languagetool/api/";
-    private static final String SERVER_URL = "https://lt.softcatala.org/v2/check";
     private static final String ENCODING = "UTF-8";
     private static final String TAG = LanguageToolRequest.class.getSimpleName();
     private static final String m_sessionId = GetSessionID();
@@ -103,9 +100,10 @@ public class LanguageToolRequest {
         try {
 
             String url = BuildURL();
+            Log.d("softcatala", "URL: " + url);
 
             URL obj = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("POST");
 
             String urlParameters = GetFillPostFields(text);
@@ -158,11 +156,10 @@ public class LanguageToolRequest {
     }
 
     private String BuildURL() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(SERVER_URL);
-        /* Parameter to help to track requests from the same IP */
-        sb.append(AddQueryParameter("?", "sessionID", m_sessionId));
-        return sb.toString();
+        return Configuration.getInstance().getServer() +
+                "/v2/check" +
+                /* Parameter to help to track requests from the same IP */
+                AddQueryParameter("?", "sessionID", m_sessionId);
     }
 
     String AddQueryParameter(String separator, String key, String value) {

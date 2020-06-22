@@ -37,4 +37,14 @@
         android:key="version"
         android:title="@string/version"
         android:summary="" />
+
+    <EditTextPreference
+        android:selectable="true"
+        android:enabled="true"
+        android:selectAllOnFocus="true"
+        android:inputType="textUri"
+        android:singleLine="true"
+        android:key="server"
+        android:title="@string/server"
+        android:summary="" />
 </PreferenceScreen>
