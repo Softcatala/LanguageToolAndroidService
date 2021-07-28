@@ -1,6 +1,5 @@
 
-**Update: this application is NO longer published in Google Play and it's no longer actively maintained.
-**
+UPDATE: this application is NO longer published in Google Play and it's no longer actively maintained.
 
 --- Introduction
 
