@@ -1,4 +1,7 @@
 
+**Update: this application is NO longer published in Google Play and it's no longer actively maintained.
+**
+
 --- Introduction
 
 This a spell checking service for Android 4.4 or higher that uses LanguageTool as backend.
