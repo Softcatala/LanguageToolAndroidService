@@ -25,7 +25,11 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
+import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
+
 import java.util.Date;
+import java.util.Set;
 
 
 /**
@@ -48,17 +52,44 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
         setHttpConnections();
         setVersion();
         setServer();
+        setLanguageChangeListener();
+        setMotherTongueChangeListener();
+        setPreferredVariantsChangeListener();
     }
 
     private void setServer() {
-        EditTextPreference server = ((EditTextPreference) findPreference("server"));
-        server.setSummary(Configuration.getInstance().getServer());
+        EditTextPreference serverField = ((EditTextPreference) findPreference("server"));
+        serverField.setSummary(Configuration.getInstance().getServer());
 
-        server.setOnPreferenceChangeListener((preference, newValue) -> {
+        serverField.setOnPreferenceChangeListener((preference, newValue) -> {
             String newServer = newValue.toString();
             newServer = Configuration.getInstance().setServer(newServer);
-            EditTextPreference server1 = ((EditTextPreference) preference);
-            server1.setSummary(newServer);
+            ((EditTextPreference) preference).setSummary(newServer);
+            return true;
+        });
+    }
+
+    private void setLanguageChangeListener() {
+        ListPreference languageField = ((ListPreference) findPreference("language"));
+        languageField.setOnPreferenceChangeListener((preference, newValue) -> {
+            Configuration.getInstance().setLanguage(newValue.toString());
+            return true;
+        });
+    }
+
+    private void setMotherTongueChangeListener() {
+        ListPreference motherTongueField = ((ListPreference) findPreference("mother_tongue"));
+        motherTongueField.setOnPreferenceChangeListener((preference, newValue) -> {
+            Configuration.getInstance().setMotherTongue(newValue.toString());
+            return true;
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setPreferredVariantsChangeListener() {
+        MultiSelectListPreference preferredVariantsField = ((MultiSelectListPreference) findPreference("preferred_variants"));
+        preferredVariantsField.setOnPreferenceChangeListener((preference, newValue) -> {
+            Configuration.getInstance().setPreferredVariants((Set<String>) newValue);
             return true;
         });
     }

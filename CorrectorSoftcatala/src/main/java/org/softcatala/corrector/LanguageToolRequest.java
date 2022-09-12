@@ -26,8 +26,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
+import java.util.Set;
 
 import android.util.Log;
 
@@ -39,23 +41,43 @@ public class LanguageToolRequest {
 
     private final LanguageToolParsing languageToolParsing = new LanguageToolParsing();
     String[][] mAndroidToLTLangMap = new String[][]{
-            {"en", "en-US"},
-            {"de", "de-DE"},
-            {"pl", "pl"},
-            {"fr", "fr"},
-            {"ca", "ca"},
-            {"uk", "uk"},
-            {"es", "es"},
+            {"ar", "ar"},
+            {"ast", "ast-ES"},
+            {"be", "be-BY"},
             {"br", "br-FR"},
-            {"eo", "eo"},
-            {"ru", "ru-RU"},
+            {"ca", "ca-ES"},
+            {"zh", "zh-CN"},
+            {"da", "da-DK"},
             {"nl", "nl"},
-            {"it", "it"}
+            {"en", "en-US"},
+            {"eo", "eo"},
+            {"fr", "fr"},
+            {"gl", "gl-ES"},
+            {"de", "de-DE"},
+            {"el", "el-GR"},
+            {"ga", "ga-IE"},
+            {"it", "it"},
+            {"ja", "ja-JP"},
+            {"km", "km-KH"},
+            {"nb", "nb"},
+            {"no", "no"},
+            {"fa", "fa"},
+            {"pl", "pl-PL"},
+            {"pt", "pt"},
+            {"ro", "ro-RO"},
+            {"ru", "ru-RU"},
+            {"sk", "sk-SK"},
+            {"sl", "sl-SI"},
+            {"es", "es"},
+            {"sv", "sv"},
+            {"tl", "tl-PH"},
+            {"ta", "ta-IN"},
+            {"uk", "uk-UA"},
     };
-    private final String m_language;
+    private final String system_language;
 
     public LanguageToolRequest(String language) {
-        m_language = ConvertLanguage(language);
+        system_language = language;
     }
 
     static private String GetSessionID() {
@@ -64,7 +86,6 @@ public class LanguageToolRequest {
         int id = rand.nextInt(MAX_NUM);
         return Integer.toString(id);
     }
-
 
     private String ConvertLanguage(String language) {
         String lang = "";
@@ -84,16 +105,38 @@ public class LanguageToolRequest {
     }
 
     private String GetFillPostFields(String text) {
+        StringBuilder queryParameter = new StringBuilder();
+        queryParameter.append(AddQueryParameter("", "useragent", "androidspell"));
+        queryParameter.append(AddQueryParameter("&", "text", text));
 
-        return AddQueryParameter("", "language", m_language) +
-                AddQueryParameter("&", "text", text) +
-                /* Parameter to allow languagetool.org to distinguish the origin of the request */
-                AddQueryParameter("&", "useragent", "androidspell");
+        String settings_language = Configuration.getInstance().getLanguage();
+        if (settings_language.equals("system")) {
+            queryParameter.append(AddQueryParameter("&", "language", ConvertLanguage(system_language)));
+        } else {
+            queryParameter.append(AddQueryParameter("&", "language", settings_language));
+
+            if (settings_language.equals("auto")) {
+                Set<String> settings_preferred_variants = Configuration.getInstance().getPreferredVariants();
+                if (!settings_preferred_variants.isEmpty()) {
+                    queryParameter.append(AddQueryParameter("&", "preferredVariants", String.join(",", settings_preferred_variants)));
+                } else {
+                    Log.d(TAG, "preferredVariants are empty");
+                }
+            }
+        }
+
+        String settings_mother_tongue = Configuration.getInstance().getMotherTongue();
+        if (!settings_mother_tongue.isEmpty()) {
+            queryParameter.append(AddQueryParameter("&", "motherTongue", settings_mother_tongue));
+        } else {
+            Log.d(TAG, "mother_tongue is empty");
+        }
+
+        return queryParameter.toString();
     }
 
     // HTTP POST request
     private String sendPost(String text) {
-
         try {
 
             String url = BuildURL();
