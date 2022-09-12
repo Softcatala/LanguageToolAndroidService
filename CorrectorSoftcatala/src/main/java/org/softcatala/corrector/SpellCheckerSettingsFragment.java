@@ -20,7 +20,6 @@
 package org.softcatala.corrector;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
@@ -49,22 +48,6 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
         setHttpConnections();
         setVersion();
         setServer();
-        //setDialect();
-    }
-
-    private void setDialect() {
-        /*Boolean dialect = Configuration.getInstance().getDialect();
-        CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
-        cb.setChecked(dialect);
-
-        cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Boolean dialect = Configuration.getInstance().getDialect();
-                Configuration.getInstance().setDialect(!dialect);
-                Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
-                return true;
-            }
-        });*/
     }
 
     private void setServer() {

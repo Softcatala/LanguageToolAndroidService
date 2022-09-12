@@ -29,7 +29,6 @@ public class Configuration {
     private static final String SoftcatalaServer = "https://lt.softcatala.org";
 
     private static volatile Configuration instance = null;
-    //private static String PREF_DIALECT = "corrector.softcatala.dialect";
     private static final String PREF_SERVER = "corrector.softcatala.server";
     private static int HttpConnections = 0;
     private static Date LastConnection = null;
@@ -42,24 +41,6 @@ public class Configuration {
 
         return instance;
     }
-
-    /*public Boolean getDialect()
-    {
-        boolean previousTo50 = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
-
-        if (previousTo50)
-            return false;
-
-        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-        Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-        return dialect;
-    }
-
-    public void setDialect(Boolean dialect)
-    {
-        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-        spref.edit().putBoolean(PREF_DIALECT, dialect).commit();
-    }*/
 
     public String getServer()
     {
