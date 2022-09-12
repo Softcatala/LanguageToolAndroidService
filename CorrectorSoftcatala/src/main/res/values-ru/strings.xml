@@ -4,6 +4,7 @@
   <string name="spellchecker_name">Корректор LanguageTool </string>
   <string name="sample_settings">Настройки</string>
   <string name="version">Версия</string>
+  <string name="server">Cерверу</string>
   <string name="requests">Объём запросов к серверу проверки</string>
   <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (сборка от %s)</string>

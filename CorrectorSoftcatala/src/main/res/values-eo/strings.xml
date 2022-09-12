@@ -4,6 +4,7 @@
   <string name="spellchecker_name">Kontrolilo Lingvoilo/LanguageTool</string>
   <string name="sample_settings">Agordoj</string>
   <string name="version">Versio</string>
+  <string name="server">Servilo</string>
   <string name="requests">Petoj al la servilo de kontrolado</string>
   <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (kunmetita ĉe %s)</string>

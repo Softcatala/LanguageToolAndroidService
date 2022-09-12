@@ -4,6 +4,7 @@
   <string name="spellchecker_name">Revisió de text LanguageTool</string>
   <string name="sample_settings">Preferències</string>
   <string name="version">Versió</string>
+  <string name="server">Servidor</string>
   <string name="requests">Sol·licituds al servidor</string>
   <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (compilat el %s)</string>

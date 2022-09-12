@@ -20,18 +20,27 @@
 package org.softcatala.corrector;
 
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Configuration {
+    private static final String languagetoolServerDefault = "https://api.languagetool.org";
+    private static final String languageDefault = "system";
+    private static final String motherTongueDefault = "";
+    private static final Set<String> preferredVariantsDefault = new HashSet<>();
 
     private static volatile Configuration instance = null;
-    private static String PREF_DIALECT = "corrector.softcatala.dialect";
+    private static final String PREF_SERVER = "corrector.softcatala.server";
+    private static final String PREF_LANGUAGE = "corrector.softcatala.language";
+    private static final String PREF_MOTHER_TONGUE = "corrector.softcatala.mother_tongue";
+    private static final String PREF_PREFERRED_VARIANTS = "corrector.softcatala.preferred_variants";
     private static int HttpConnections = 0;
     private static Date LastConnection = null;
-    //public static SpellCheckerSettingsActivity SettingsActivity;
+    public static SpellCheckerSettingsActivity SettingsActivity;
 
     public static synchronized Configuration getInstance() {
         if (instance == null) {
@@ -41,23 +50,25 @@ public class Configuration {
         return instance;
     }
 
-    /*public Boolean getDialect()
+    public String getServer()
     {
-        boolean previousTo50 = Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
-
-        if (previousTo50)
-            return false;
-
-        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-        Boolean dialect = spref.getBoolean(PREF_DIALECT, false);
-        return dialect;
+        if (SettingsActivity == null) {
+            return languagetoolServerDefault;
+        }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        return sharedPreferences.getString(PREF_SERVER, languagetoolServerDefault);
     }
 
-    public void setDialect(Boolean dialect)
+    public String setServer(String server)
     {
-        SharedPreferences spref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
-        spref.edit().putBoolean(PREF_DIALECT, dialect).commit();
-    }*/
+        if (server.isEmpty()) {
+            server = languagetoolServerDefault;
+        }
+
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        sharedPreference.edit().putString(PREF_SERVER, server).apply();
+        return server;
+    }
 
     public int getHttpConnections() {
         return HttpConnections;
@@ -73,5 +84,50 @@ public class Configuration {
 
     public void setLastConnection(Date date) {
         LastConnection = date;
+    }
+
+    public String getLanguage()
+    {
+        if (SettingsActivity == null) {
+            return languageDefault;
+        }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        return sharedPreferences.getString(PREF_LANGUAGE, languageDefault);
+    }
+
+    public String getMotherTongue()
+    {
+        if (SettingsActivity == null) {
+            return motherTongueDefault;
+        }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        return sharedPreferences.getString(PREF_MOTHER_TONGUE, motherTongueDefault);
+    }
+
+    public Set<String> getPreferredVariants()
+    {
+        if (SettingsActivity == null) {
+            return preferredVariantsDefault;
+        }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        return sharedPreferences.getStringSet(PREF_PREFERRED_VARIANTS, preferredVariantsDefault);
+    }
+
+    public void setLanguage(String language) {
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        sharedPreference.edit().putString(PREF_LANGUAGE, language).apply();
+    }
+
+    public void setMotherTongue(String motherTongue) {
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        sharedPreference.edit().putString(PREF_MOTHER_TONGUE, motherTongue).apply();
+    }
+
+    public void setPreferredVariants(Set<String> preferredVariants) {
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(SettingsActivity);
+        sharedPreference.edit().putStringSet(PREF_PREFERRED_VARIANTS, preferredVariants).apply();
     }
 }

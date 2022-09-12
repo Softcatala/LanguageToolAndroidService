@@ -4,6 +4,7 @@
   <string name="spellchecker_name">Revisor LanguageTool</string>
   <string name="sample_settings">Configurações</string>
   <string name="version">Versão</string>
+  <string name="server">Servidor</string>
   <string name="requests">Pedidos ao servidor do revisor</string>
   <string name="version_text" formatted="false">%s (feito em %s)</string>
   <string name="connections" formatted="false">%d (último %s)</string>

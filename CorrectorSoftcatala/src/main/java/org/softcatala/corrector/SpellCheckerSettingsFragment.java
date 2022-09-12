@@ -20,12 +20,16 @@
 package org.softcatala.corrector;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.EditTextPreference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
+import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
+
 import java.util.Date;
+import java.util.Set;
 
 
 /**
@@ -47,22 +51,47 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
         setHttpConnections();
         setVersion();
-        //setDialect();
+        setServer();
+        setLanguageChangeListener();
+        setMotherTongueChangeListener();
+        setPreferredVariantsChangeListener();
     }
 
-    private void setDialect() {
-        /*Boolean dialect = Configuration.getInstance().getDialect();
-        CheckBoxPreference cb = (CheckBoxPreference) findPreference("dialect");
-        cb.setChecked(dialect);
+    private void setServer() {
+        EditTextPreference serverField = ((EditTextPreference) findPreference("server"));
+        serverField.setSummary(Configuration.getInstance().getServer());
 
-        cb.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Boolean dialect = Configuration.getInstance().getDialect();
-                Configuration.getInstance().setDialect(!dialect);
-                Log.d(TAG, "Pref " + preference.getKey() + " changed to " + newValue.toString());
-                return true;
-            }
-        });*/
+        serverField.setOnPreferenceChangeListener((preference, newValue) -> {
+            String newServer = newValue.toString();
+            newServer = Configuration.getInstance().setServer(newServer);
+            ((EditTextPreference) preference).setSummary(newServer);
+            return true;
+        });
+    }
+
+    private void setLanguageChangeListener() {
+        ListPreference languageField = ((ListPreference) findPreference("language"));
+        languageField.setOnPreferenceChangeListener((preference, newValue) -> {
+            Configuration.getInstance().setLanguage(newValue.toString());
+            return true;
+        });
+    }
+
+    private void setMotherTongueChangeListener() {
+        ListPreference motherTongueField = ((ListPreference) findPreference("mother_tongue"));
+        motherTongueField.setOnPreferenceChangeListener((preference, newValue) -> {
+            Configuration.getInstance().setMotherTongue(newValue.toString());
+            return true;
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setPreferredVariantsChangeListener() {
+        MultiSelectListPreference preferredVariantsField = ((MultiSelectListPreference) findPreference("preferred_variants"));
+        preferredVariantsField.setOnPreferenceChangeListener((preference, newValue) -> {
+            Configuration.getInstance().setPreferredVariants((Set<String>) newValue);
+            return true;
+        });
     }
 
     private void setVersion() {
@@ -74,9 +103,7 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
     private String getVersion() {
         try {
-            String versionName =
-                    getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-            return versionName;
+            return getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
         } catch (Exception e) {
             return null;
         }

@@ -37,4 +37,47 @@
         android:key="version"
         android:title="@string/version"
         android:summary="" />
+
+    <EditTextPreference
+        android:selectable="true"
+        android:enabled="true"
+        android:inputType="textUri"
+        android:key="server"
+        android:title="@string/server"/>
+
+    <ListPreference
+        android:selectable="true"
+        android:enabled="true"
+        android:key="language"
+        android:title="@string/language"
+        android:summary="@string/language_summary"
+        android:defaultValue="system"
+        android:entries="@array/language_names_special"
+        android:entryValues="@array/language_codes_special"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <ListPreference
+        android:selectable="true"
+        android:enabled="true"
+        android:key="mother_tongue"
+        android:title="@string/mother_tongue"
+        android:summary="@string/mother_tongue_summary"
+        android:defaultValue="none"
+        android:entries="@array/language_names"
+        android:entryValues="@array/language_codes"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+    <MultiSelectListPreference
+        android:selectable="true"
+        android:enabled="true"
+        android:key="preferred_variants"
+        android:title="@string/preferred_variants"
+        android:summary="@string/preferred_variants_summary"
+        android:entries="@array/language_names"
+        android:entryValues="@array/language_codes"
+        android:defaultValue="@array/empty_array"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
 </PreferenceScreen>

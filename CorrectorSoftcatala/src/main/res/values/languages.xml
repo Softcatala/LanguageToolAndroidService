@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TODO: Add a way to add the first two items dynamically -->
+    <string-array name="language_names_special">
+        <item>Use the system-language</item>
+        <item>Guess the language automatically</item>
+        <!-- curl 'https://api.languagetoolplus.com/v2/languages' | jq '.[].name' | uniq -->
+        <item>Arabic</item>
+        <item>Asturian</item>
+        <item>Belarusian</item>
+        <item>Breton</item>
+        <item>Catalan</item>
+        <item>Catalan (Valencian)</item>
+        <item>Chinese</item>
+        <item>Danish</item>
+        <item>Dutch</item>
+        <item>Dutch (Belgium)</item>
+        <item>English</item>
+        <item>English (Australian)</item>
+        <item>English (Canadian)</item>
+        <item>English (GB)</item>
+        <item>English (New Zealand)</item>
+        <item>English (South African)</item>
+        <item>English (US)</item>
+        <item>Esperanto</item>
+        <item>French</item>
+        <item>Galician</item>
+        <item>German</item>
+        <item>German (Austria)</item>
+        <item>German (Germany)</item>
+        <item>German (Swiss)</item>
+        <item>Greek</item>
+        <item>Irish</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Khmer</item>
+        <item>Norwegian (Bokmål)</item>
+        <item>Persian</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Portuguese (Angola preAO)</item>
+        <item>Portuguese (Brazil)</item>
+        <item>Portuguese (Moçambique preAO)</item>
+        <item>Portuguese (Portugal)</item>
+        <item>Romanian</item>
+        <item>Russian</item>
+        <item>Simple German</item>
+        <item>Slovak</item>
+        <item>Slovenian</item>
+        <item>Spanish</item>
+        <item>Spanish (voseo)</item>
+        <item>Swedish</item>
+        <item>Tagalog</item>
+        <item>Tamil</item>
+        <item>Ukrainian</item>
+    </string-array>
+    <!-- TODO: Add a way to add the first two items dynamically -->
+    <string-array name="language_codes_special">
+        <item>system</item>
+        <item>auto</item>
+        <!-- curl 'https://api.languagetoolplus.com/v2/languages' | jq '.[].longCode' | uniq -->
+        <item>ar</item>
+        <item>ast-ES</item>
+        <item>be-BY</item>
+        <item>br-FR</item>
+        <item>ca-ES</item>
+        <item>ca-ES-valencia</item>
+        <item>zh-CN</item>
+        <item>da-DK</item>
+        <item>nl</item>
+        <item>nl-BE</item>
+        <item>en</item>
+        <item>en-AU</item>
+        <item>en-CA</item>
+        <item>en-GB</item>
+        <item>en-NZ</item>
+        <item>en-ZA</item>
+        <item>en-US</item>
+        <item>eo</item>
+        <item>fr</item>
+        <item>gl-ES</item>
+        <item>de</item>
+        <item>de-AT</item>
+        <item>de-DE</item>
+        <item>de-CH</item>
+        <item>el-GR</item>
+        <item>ga-IE</item>
+        <item>it</item>
+        <item>ja-JP</item>
+        <item>km-KH</item>
+        <item>nb</item>
+        <item>no</item>
+        <item>fa</item>
+        <item>pl-PL</item>
+        <item>pt</item>
+        <item>pt-AO</item>
+        <item>pt-BR</item>
+        <item>pt-MZ</item>
+        <item>pt-PT</item>
+        <item>ro-RO</item>
+        <item>ru-RU</item>
+        <item>de-DE-x-simple-language</item>
+        <item>sk-SK</item>
+        <item>sl-SI</item>
+        <item>es</item>
+        <item>es-AR</item>
+        <item>sv</item>
+        <item>tl-PH</item>
+        <item>ta-IN</item>
+        <item>uk-UA</item>
+    </string-array>
+    <string-array name="language_names">
+        <!-- curl 'https://api.languagetoolplus.com/v2/languages' | jq '.[].name' | uniq -->
+        <item>Arabic</item>
+        <item>Asturian</item>
+        <item>Belarusian</item>
+        <item>Breton</item>
+        <item>Catalan</item>
+        <item>Catalan (Valencian)</item>
+        <item>Chinese</item>
+        <item>Danish</item>
+        <item>Dutch</item>
+        <item>Dutch (Belgium)</item>
+        <item>English</item>
+        <item>English (Australian)</item>
+        <item>English (Canadian)</item>
+        <item>English (GB)</item>
+        <item>English (New Zealand)</item>
+        <item>English (South African)</item>
+        <item>English (US)</item>
+        <item>Esperanto</item>
+        <item>French</item>
+        <item>Galician</item>
+        <item>German</item>
+        <item>German (Austria)</item>
+        <item>German (Germany)</item>
+        <item>German (Swiss)</item>
+        <item>Greek</item>
+        <item>Irish</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Khmer</item>
+        <item>Norwegian (Bokmål)</item>
+        <item>Persian</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Portuguese (Angola preAO)</item>
+        <item>Portuguese (Brazil)</item>
+        <item>Portuguese (Moçambique preAO)</item>
+        <item>Portuguese (Portugal)</item>
+        <item>Romanian</item>
+        <item>Russian</item>
+        <item>Simple German</item>
+        <item>Slovak</item>
+        <item>Slovenian</item>
+        <item>Spanish</item>
+        <item>Spanish (voseo)</item>
+        <item>Swedish</item>
+        <item>Tagalog</item>
+        <item>Tamil</item>
+        <item>Ukrainian</item>
+    </string-array>
+    <string-array name="language_codes">
+        <!-- curl 'https://api.languagetoolplus.com/v2/languages' | jq '.[].longCode' | uniq -->
+        <item>ar</item>
+        <item>ast-ES</item>
+        <item>be-BY</item>
+        <item>br-FR</item>
+        <item>ca-ES</item>
+        <item>ca-ES-valencia</item>
+        <item>zh-CN</item>
+        <item>da-DK</item>
+        <item>nl</item>
+        <item>nl-BE</item>
+        <item>en</item>
+        <item>en-AU</item>
+        <item>en-CA</item>
+        <item>en-GB</item>
+        <item>en-NZ</item>
+        <item>en-ZA</item>
+        <item>en-US</item>
+        <item>eo</item>
+        <item>fr</item>
+        <item>gl-ES</item>
+        <item>de</item>
+        <item>de-AT</item>
+        <item>de-DE</item>
+        <item>de-CH</item>
+        <item>el-GR</item>
+        <item>ga-IE</item>
+        <item>it</item>
+        <item>ja-JP</item>
+        <item>km-KH</item>
+        <item>nb</item>
+        <item>no</item>
+        <item>fa</item>
+        <item>pl-PL</item>
+        <item>pt</item>
+        <item>pt-AO</item>
+        <item>pt-BR</item>
+        <item>pt-MZ</item>
+        <item>pt-PT</item>
+        <item>ro-RO</item>
+        <item>ru-RU</item>
+        <item>de-DE-x-simple-language</item>
+        <item>sk-SK</item>
+        <item>sl-SI</item>
+        <item>es</item>
+        <item>es-AR</item>
+        <item>sv</item>
+        <item>tl-PH</item>
+        <item>ta-IN</item>
+        <item>uk-UA</item>
+    </string-array>
+</resources>

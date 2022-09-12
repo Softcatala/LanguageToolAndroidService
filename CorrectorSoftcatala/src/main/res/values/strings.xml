@@ -25,6 +25,7 @@
     <string name="subtype_generic" translatable="false">%s</string>
     <string name="sample_settings">Preferences</string>
     <string name="version">Version</string>
+    <string name="server">Server</string>
     <string name="requests">Requests to the proofreader server</string>
     <!-- %s is the version number and %s the date (e.g Sun Feb 28) -->
     <string name="version_text" formatted="false">%s (built on %s)</string>
@@ -45,4 +46,10 @@
         \nOverall due to Android ecosystem fragmentation in API and UI configuration layers a significant combination of devices do not work with this application.
     </string>
     <string name="button_close">Close</string>
+    <string name="language">Language</string>
+    <string name="language_summary">Uses the system language by default, but you can also use automatic detection or set it to a specific language.</string>
+    <string name="mother_tongue">Mother tongue</string>
+    <string name="mother_tongue_summary">The language code of your native language, enabling false friends checks for some language pairs.</string>
+    <string name="preferred_variants">Preferred variants</string>
+    <string name="preferred_variants_summary">List of preferred language variants. The automatic language detector can detect e.g. English, but it cannot decide whether British English or American English is used. Thus this parameter can be used to specify the preferred variants like en-GB and de-AT. </string>
 </resources>

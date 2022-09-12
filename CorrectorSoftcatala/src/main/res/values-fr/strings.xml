@@ -4,6 +4,7 @@
   <string name="spellchecker_name">Correcteur LanguageTool</string>
   <string name="sample_settings">Préférences</string>
   <string name="version">Version</string>
+  <string name="server">Serveur</string>
   <string name="requests">Requêtes au serveur de correction</string>
   <!--%s is the version number and %s the date (e.g Sun Feb 28)-->
   <string name="version_text" formatted="false">%s (généré sur %s)</string>

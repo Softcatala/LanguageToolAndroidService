@@ -19,7 +19,6 @@
 
 package org.softcatala.corrector;
 
-import android.os.Build;
 import android.service.textservice.SpellCheckerService;
 import android.util.Log;
 import android.view.textservice.SentenceSuggestionsInfo;
@@ -56,14 +55,9 @@ public class LTSpellCheckerService extends SpellCheckerService {
             int[] ret = new int[integers.size()];
             Iterator<Integer> iterator = integers.iterator();
             for (int i = 0; i < ret.length; i++) {
-                ret[i] = iterator.next().intValue();
+                ret[i] = iterator.next();
             }
             return ret;
-        }
-
-        private boolean isSentenceSpellCheckApiSupported() {
-            // Note that the sentence level spell check APIs work on Jelly Bean or later.
-            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
         }
 
         @Override
@@ -72,7 +66,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
                 Log.d(TAG, "onCreate");
             }
             mLocale = getLocale();
-            mReportedErrors = new HashSet<String>();
+            mReportedErrors = new HashSet<>();
         }
 
         @Override
@@ -117,21 +111,15 @@ public class LTSpellCheckerService extends SpellCheckerService {
                 TextInfo[] textInfos, int suggestionsLimit) {
 
             try {
-                if (!isSentenceSpellCheckApiSupported()) {
-                    Log.e(TAG, "Sentence spell check is not supported on this platform");
-                    return null;
-                }
-
-                final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<SentenceSuggestionsInfo>();
-                for (int i = 0; i < textInfos.length; ++i) {
-                    final TextInfo ti = textInfos[i];
+                final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<>();
+                for (final TextInfo ti : textInfos) {
                     if (DBG) {
                         Log.d(TAG, "onGetSentenceSuggestionsMultiple: " + ti.getText());
                     }
 
-                    ArrayList<SuggestionsInfo> sis = new ArrayList<SuggestionsInfo>();
-                    ArrayList<Integer> offsets = new ArrayList<Integer>();
-                    ArrayList<Integer> lengths = new ArrayList<Integer>();
+                    ArrayList<SuggestionsInfo> sis = new ArrayList<>();
+                    ArrayList<Integer> offsets = new ArrayList<>();
+                    ArrayList<Integer> lengths = new ArrayList<>();
 
                     removePreviouslyMarkedErrors(ti, sis, offsets, lengths);
                     getSuggestionsFromLT(ti, sis, offsets, lengths);
@@ -165,17 +153,17 @@ public class LTSpellCheckerService extends SpellCheckerService {
             Suggestion[] suggestions = languageToolRequest
                     .GetSuggestions(input);
 
-            for (int s = 0; s < suggestions.length; s++) {
+            for (Suggestion suggestion : suggestions) {
                 SuggestionsInfo si = new SuggestionsInfo(
                         SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO,
-                        suggestions[s].Text);
+                        suggestion.Text);
 
                 si.setCookieAndSequence(ti.getCookie(), ti.getSequence());
                 sis.add(si);
-                offsets.add(suggestions[s].Position);
-                lengths.add(suggestions[s].Length);
-                String incorrectText = input.substring(suggestions[s].Position,
-                        suggestions[s].Position + suggestions[s].Length);
+                offsets.add(suggestion.Position);
+                lengths.add(suggestion.Length);
+                String incorrectText = input.substring(suggestion.Position,
+                        suggestion.Position + suggestion.Length);
 
                 if (mReportedErrors.size() < MAX_REPORTED_ERRORS_STORED) {
                     mReportedErrors.add(incorrectText);
@@ -213,7 +201,7 @@ public class LTSpellCheckerService extends SpellCheckerService {
                 while (idx != -1) {
 
                     SuggestionsInfo siNone = new SuggestionsInfo(REMOVE_SPAN,
-                            new String[]{new String()});
+                            new String[]{""});
                     siNone.setCookieAndSequence(ti.getCookie(), ti.getSequence());
                     sis.add(siNone);
                     int len = txt.length();
