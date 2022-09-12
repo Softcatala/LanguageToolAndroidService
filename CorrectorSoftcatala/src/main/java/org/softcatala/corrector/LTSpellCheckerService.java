@@ -60,11 +60,6 @@ public class LTSpellCheckerService extends SpellCheckerService {
             return ret;
         }
 
-        private boolean isSentenceSpellCheckApiSupported() {
-            // Note that the sentence level spell check APIs work on Jelly Bean or later.
-            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-        }
-
         @Override
         public void onCreate() {
             if (DBG) {
@@ -116,11 +111,6 @@ public class LTSpellCheckerService extends SpellCheckerService {
                 TextInfo[] textInfos, int suggestionsLimit) {
 
             try {
-                if (!isSentenceSpellCheckApiSupported()) {
-                    Log.e(TAG, "Sentence spell check is not supported on this platform");
-                    return null;
-                }
-
                 final ArrayList<SentenceSuggestionsInfo> retval = new ArrayList<>();
                 for (final TextInfo ti : textInfos) {
                     if (DBG) {
