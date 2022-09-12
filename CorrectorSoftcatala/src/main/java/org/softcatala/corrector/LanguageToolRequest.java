@@ -119,8 +119,6 @@ public class LanguageToolRequest {
                 Set<String> settings_preferred_variants = Configuration.getInstance().getPreferredVariants();
                 if (!settings_preferred_variants.isEmpty()) {
                     queryParameter.append(AddQueryParameter("&", "preferredVariants", String.join(",", settings_preferred_variants)));
-                } else {
-                    Log.d(TAG, "preferredVariants are empty");
                 }
             }
         }
@@ -128,8 +126,6 @@ public class LanguageToolRequest {
         String settings_mother_tongue = Configuration.getInstance().getMotherTongue();
         if (!settings_mother_tongue.isEmpty()) {
             queryParameter.append(AddQueryParameter("&", "motherTongue", settings_mother_tongue));
-        } else {
-            Log.d(TAG, "mother_tongue is empty");
         }
 
         return queryParameter.toString();
