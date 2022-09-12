@@ -52,7 +52,7 @@ public class LanguageToolRequest {
             {"nl", "nl"},
             {"it", "it"}
     };
-    private String m_language;
+    private final String m_language;
 
     public LanguageToolRequest(String language) {
         m_language = ConvertLanguage(language);
@@ -69,9 +69,9 @@ public class LanguageToolRequest {
     private String ConvertLanguage(String language) {
         String lang = "";
 
-        for (int i = 0; i < mAndroidToLTLangMap.length; i++) {
-            if (language.startsWith(mAndroidToLTLangMap[i][0])) {
-                lang = mAndroidToLTLangMap[i][1];
+        for (String[] strings : mAndroidToLTLangMap) {
+            if (language.startsWith(strings[0])) {
+                lang = strings[1];
                 break;
             }
         }
@@ -85,13 +85,10 @@ public class LanguageToolRequest {
 
     private String GetFillPostFields(String text) {
 
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(AddQueryParameter("", "language", m_language));
-        sb.append(AddQueryParameter("&", "text", text));
-        /* Parameter to allow languagetool.org to distingish the origin of the request */
-        sb.append(AddQueryParameter("&", "useragent", "androidspell"));
-        return sb.toString();
+        return AddQueryParameter("", "language", m_language) +
+                AddQueryParameter("&", "text", text) +
+                /* Parameter to allow languagetool.org to distinguish the origin of the request */
+                AddQueryParameter("&", "useragent", "androidspell");
     }
 
     // HTTP POST request
@@ -123,7 +120,7 @@ public class LanguageToolRequest {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             Log.d("softcatala", "Response : " + response);
 
             while ((inputLine = in.readLine()) != null) {
@@ -151,8 +148,7 @@ public class LanguageToolRequest {
         } catch (Exception e) {
             Log.e(TAG, "Error reading stream from URL.", e);
         }
-        Suggestion[] suggestions = {};
-        return suggestions;
+        return new Suggestion[]{};
     }
 
     private String BuildURL() {

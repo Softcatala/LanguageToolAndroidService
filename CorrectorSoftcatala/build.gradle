@@ -1,12 +1,20 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+}
 
 android {
-    compileSdkVersion 26
+    compileSdk 33
 
     defaultConfig {
         applicationId "org.softcatala.corrector"
-        minSdkVersion 19
-        targetSdkVersion 26
+        minSdk 19
+        targetSdk 33
         versionCode 11
         versionName "1.0.10"
     }
@@ -14,8 +22,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -31,6 +43,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:26.+'
-    implementation 'com.android.support.constraint:constraint-layout:1.+'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.preference:preference:1.1.1' // latest 1.2.0 gives 'Duplicate class androidx.lifecycle.ViewModelLazy found in modules lifecycle-viewmodel-2.5.1-runtime'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }

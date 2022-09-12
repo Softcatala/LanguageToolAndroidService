@@ -1,9 +1,7 @@
 package org.softcatala.corrector;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -26,11 +24,6 @@ public class WelcomeActivity extends Activity {
         String text = getResources().getString(R.string.button_close);
         okButton.setText(text);
 
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        okButton.setOnClickListener(v -> finish());
     }
 }

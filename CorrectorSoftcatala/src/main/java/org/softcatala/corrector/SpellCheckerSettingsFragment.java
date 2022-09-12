@@ -71,14 +71,12 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
         EditTextPreference server = ((EditTextPreference) findPreference("server"));
         server.setSummary(Configuration.getInstance().getServer());
 
-        server.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                String newServer = newValue.toString();
-                newServer = Configuration.getInstance().setServer(newServer);
-                EditTextPreference server = ((EditTextPreference) preference);
-                server.setSummary(newServer);
-                return true;
-            }
+        server.setOnPreferenceChangeListener((preference, newValue) -> {
+            String newServer = newValue.toString();
+            newServer = Configuration.getInstance().setServer(newServer);
+            EditTextPreference server1 = ((EditTextPreference) preference);
+            server1.setSummary(newServer);
+            return true;
         });
     }
 
@@ -91,9 +89,7 @@ public class SpellCheckerSettingsFragment extends PreferenceFragment {
 
     private String getVersion() {
         try {
-            String versionName =
-                    getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-            return versionName;
+            return getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
         } catch (Exception e) {
             return null;
         }

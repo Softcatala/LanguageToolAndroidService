@@ -20,7 +20,8 @@
 package org.softcatala.corrector;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 import java.util.Date;
 
@@ -28,8 +29,8 @@ public class Configuration {
     private static final String SoftcatalaServer = "https://lt.softcatala.org";
 
     private static volatile Configuration instance = null;
-    private static String PREF_SERVER = "corrector.softcatala.server";
     //private static String PREF_DIALECT = "corrector.softcatala.dialect";
+    private static final String PREF_SERVER = "corrector.softcatala.server";
     private static int HttpConnections = 0;
     private static Date LastConnection = null;
     public static SpellCheckerSettingsActivity SettingsActivity;

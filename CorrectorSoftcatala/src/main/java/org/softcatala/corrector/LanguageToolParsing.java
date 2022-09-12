@@ -33,7 +33,7 @@ public class LanguageToolParsing {
 
 
     public Suggestion[] GetSuggestions(String jsonText) {
-        ArrayList<Suggestion> suggestions = new ArrayList<Suggestion>();
+        ArrayList<Suggestion> suggestions = new ArrayList<>();
 
         try {
 
@@ -41,7 +41,6 @@ public class LanguageToolParsing {
             JSONArray matches = json.getJSONArray("matches");
 
             for (int i = 0; i < matches.length(); i++) {
-
                 JSONObject match = matches.getJSONObject(i);
 
                 JSONArray replacements = match.getJSONArray("replacements");
@@ -50,7 +49,7 @@ public class LanguageToolParsing {
 
                 // Since we process fragments we need to skip the upper case
                 // suggestion
-                if (ruleId.equals("UPPERCASE_SENTENCE_START") == true)
+                if (ruleId.equals("UPPERCASE_SENTENCE_START"))
                     continue;
 
                 Suggestion suggestion = new Suggestion();
@@ -60,13 +59,13 @@ public class LanguageToolParsing {
                     String msgText = String.format("(%s)", message);
                     suggestion.Text = new String[]{msgText};
                 } else {
-                    ArrayList<String> list = new ArrayList<String>();
+                    ArrayList<String> list = new ArrayList<>();
                     for (int r = 0; r < replacements.length(); r++) {
                         JSONObject replacement = replacements.getJSONObject(r);
                         String value = replacement.getString("value");
                         list.add(value);
                     }
-                    suggestion.Text = list.toArray(new String[list.size()]);
+                    suggestion.Text = list.toArray(new String[0]);
                 }
 
                 suggestion.Position = match.getInt("offset");
